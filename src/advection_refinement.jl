@@ -1,11 +1,11 @@
 struct AdvectionDriver{d}
     p::Int
     l::Int
-    CFL::Float64
+    C_t::Float64
     n_s::Int
     scheme::AbstractApproximationType
     element_type::AbstractElemShape
-    mapping_form::AbstractMappingForm
+    form::AbstractResidualForm
     ode_algorithm::OrdinaryDiffEqAlgorithm
     mass_solver::AbstractMassMatrixSolver
     path::String
@@ -20,37 +20,44 @@ struct AdvectionDriver{d}
     overwrite::Bool
 end
 
-function AdvectionDriver(p; l=1, CFL=2.5e-3, n_s=10,
-    element_type=Tri(), scheme="ModalMulti", 
-    mapping_form="StandardMapping", ode_algorithm="CarpenterKennedy2N54",
+function AdvectionDriver(p; l=3, C_t=1.0, n_s=50,
+    element_type=Tri(), scheme="ModalMulti", form = "SplitConservationForm",
+    mapping_form="SkewSymmetricMapping", ode_algorithm="CarpenterKennedy2N54",
     mass_solver="CholeskySolver", path="../results/", M0 = 2,
-    λ=1.0, a = (1.0,1.0,1.0), T = 1.0, mesh_perturb = 0.15,
-    n_grids = 1, load_from_file=false, overwrite=false)
+    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 0.05,
+    n_grids = 6, load_from_file=true, overwrite=false)
 
+    if Int(round(λ)) == 0 
+        path = string(path, scheme, "_", element_type, "_",
+            mapping_form, "_p", p, "/central/")
+    elseif Int(round(λ)) == 1 
+        path = string(path, scheme, "_", element_type,
+            "_", mapping_form, "_p", p, "/upwind/")
+    else 
+        path = string(path, scheme, "_", element_type, "_",
+            mapping_form, "_p", p, "/lambda", replace(string(lambda), 
+            "." => "_"), "/")
+    end
 
     element_type = eval(Symbol(element_type))()
     scheme = eval(Symbol(scheme))(p)
-    mapping_form = eval(Symbol(mapping_form))()
+    form = eval(Symbol(form))(mapping_form=eval(Symbol(mapping_form))(),
+        inviscid_numerical_flux=LaxFriedrichsNumericalFlux(λ))
     ode_algorithm = eval(Symbol(ode_algorithm))()
     mass_solver = eval(Symbol(mass_solver))()
 
-    if Int(round(λ)) == 0 path = string(path, scheme, "_", element_type, "_",
-         mapping_form, "_p", p, "/central/")
-    elseif Int(round(λ)) == 1 path = string(path, scheme, "_", element_type,
-             "_", mapping_form, "_p", p, "/upwind/")
-    else path = string(path, scheme, "_", element_type, "_",
-        mapping_form, "_p", p, "/lambda", 
-        replace(string(lambda), "." => "_"), "/")
+    if isnothing(a)
+        a = Tuple(1.0 for m in 1:dim(element_type))
     end
 
-    return AdvectionDriver(p,l,CFL,n_s,scheme,element_type,
-        mapping_form,ode_algorithm,mass_solver,path,M0,λ,L,
+    return AdvectionDriver(p,l,C_t,n_s,scheme,element_type,
+        form,ode_algorithm,mass_solver,path,M0,λ,L,
         a, T, mesh_perturb, n_grids, load_from_file, overwrite)
 end
 
 function run_driver(driver::AdvectionDriver{d}) where {d}
 
-    @unpack p,l,CFL,n_s,scheme,element_type,mapping_form,ode_algorithm,mass_solver,path,M0,λ,L,a,T,mesh_perturb, n_grids, load_from_file, overwrite = driver
+    @unpack p,l,C_t,n_s,scheme,element_type,form,ode_algorithm,mass_solver,path,M0,λ,L,a,T,mesh_perturb, n_grids, load_from_file, overwrite = driver
 
     if (!load_from_file || !isdir(path)) path = new_path(
         path,overwrite,overwrite) end
@@ -66,12 +73,9 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
         println(io, "Starting refinement from grid level ", n_start)
     end
 
-    if d == 3 initial_data = InitialDataCosine(1.0,Tuple(2*π/L for m in 1:d))
-    else initial_data = InitialDataSine(1.0,Tuple(2*π/L for m in 1:d)) end
+    initial_data = InitialDataSine(1.0,Tuple(2*π/L for m in 1:d))
 
     conservation_law = LinearAdvectionEquation(a)
-    form = SplitConservationForm(mapping_form=mapping_form, 
-            inviscid_numerical_flux=LaxFriedrichsNumericalFlux(λ))
     eoc = -1.0
 
     for n in n_start:n_grids
@@ -80,20 +84,19 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
 
         reference_approximation =ReferenceApproximation(
             scheme, element_type, mapping_degree=l)
-        
-        mesh = warp_mesh(uniform_periodic_mesh(
-            reference_approximation.reference_element,
-                Tuple((0.0,L) for m in 1:d), Tuple(M for m in 1:d),
-                collapsed_orientation=(isa(element_type,Tet) && isa(scheme,Union{ModalTensor,NodalTensor}))),
-                reference_approximation.reference_element,
-                ChanWarping(mesh_perturb,Tuple(L for m in 1:d)))
 
+        original_mesh = uniform_periodic_mesh(reference_approximation, 
+            Tuple((0.0,L) for m in 1:d), Tuple(M for m in 1:d))
+        
+        mesh = warp_mesh(original_mesh, reference_approximation, 
+            ChanWarping(mesh_perturb,Tuple(L for m in 1:d)))
+        
         spatial_discretization = SpatialDiscretization(mesh, 
             reference_approximation, project_jacobian=isa(mass_solver,
             WeightAdjustedSolver))
 
         solver = Solver(conservation_law, spatial_discretization, 
-            form, ReferenceOperator(), DefaultOperatorAlgorithm(),
+            form, PhysicalOperator(), BLASAlgorithm(),
             mass_solver)
         
         results_path = string(path, "grid_", n, "/")
@@ -124,8 +127,8 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
         end
         ode_problem = semidiscretize(solver, u0, (t0, T))
 
-        h = L/(reference_approximation.N_p * spatial_discretization.N_e)^(1/d)
-        dt = CFL*h/(norm(a))   
+        h = L/M
+        dt = C_t*h/(trace_constant(reference_approximation)*norm(a))
         reset_timer!()
         sol = solve(ode_problem, ode_algorithm, adaptive=false,
             dt=dt, save_everystep=false, callback=save_callback(

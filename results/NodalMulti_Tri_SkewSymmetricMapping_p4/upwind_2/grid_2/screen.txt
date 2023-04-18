@@ -1,0 +1,68 @@
+Number of Julia threads: 4
+Number of BLAS threads: 4
+
+Results Path: "../results/NodalMulti_Tri_SkewSymmetricMapping_p4/upwind_2/grid_2/"
+
+writing time step 0  t = 0.0
+writing time step 3  t = 0.02209708691207951
+writing time step 6  t = 0.04419417382415902
+writing time step 9  t = 0.06629126073623853
+writing time step 12  t = 0.08838834764831804
+writing time step 15  t = 0.11048543456039756
+writing time step 18  t = 0.13258252147247707
+writing time step 21  t = 0.15467960838455658
+writing time step 24  t = 0.1767766952966361
+writing time step 27  t = 0.1988737822087156
+writing time step 30  t = 0.2209708691207951
+writing time step 33  t = 0.24306795603287462
+writing time step 36  t = 0.26516504294495413
+writing time step 39  t = 0.28726212985703364
+writing time step 42  t = 0.30935921676911315
+writing time step 45  t = 0.33145630368119267
+writing time step 48  t = 0.3535533905932722
+writing time step 51  t = 0.3756504775053517
+writing time step 54  t = 0.3977475644174312
+writing time step 57  t = 0.4198446513295107
+writing time step 60  t = 0.4419417382415902
+writing time step 63  t = 0.46403882515366973
+writing time step 66  t = 0.48613591206574924
+writing time step 69  t = 0.5082329989778287
+writing time step 72  t = 0.530330085889908
+writing time step 75  t = 0.5524271728019874
+writing time step 78  t = 0.5745242597140667
+writing time step 81  t = 0.5966213466261461
+writing time step 84  t = 0.6187184335382254
+writing time step 87  t = 0.6408155204503048
+writing time step 90  t = 0.6629126073623841
+writing time step 93  t = 0.6850096942744635
+writing time step 96  t = 0.7071067811865428
+writing time step 99  t = 0.7292038680986221
+writing time step 102  t = 0.7513009550107015
+writing time step 105  t = 0.7733980419227808
+writing time step 108  t = 0.7954951288348602
+writing time step 111  t = 0.8175922157469395
+writing time step 114  t = 0.8396893026590189
+writing time step 117  t = 0.8617863895710982
+writing time step 120  t = 0.8838834764831776
+writing time step 123  t = 0.9059805633952569
+writing time step 126  t = 0.9280776503073362
+writing time step 129  t = 0.9501747372194156
+writing time step 132  t = 0.9722718241314949
+writing time step 135  t = 0.9943689110435743
+writing time step 136  t = 1.0
+Solver successfully finished!
+
+ ────────────────────────────────────────────────────────────────────────────────
+                                        Time                    Allocations      
+                               ───────────────────────   ────────────────────────
+       Tot / % measured:            3.75s /  99.0%            433MiB /  99.5%    
+
+ Section               ncalls     time    %tot     avg     alloc    %tot      avg
+ ────────────────────────────────────────────────────────────────────────────────
+ du/dt                    728    3.71s  100.0%  5.10ms    431MiB  100.0%   606KiB
+   eval residual          728    3.52s   94.8%  4.84ms    148MiB   34.3%   208KiB
+   reconstruct noda...    728    192ms    5.2%   263μs    283MiB   65.7%   398KiB
+ ────────────────────────────────────────────────────────────────────────────────
+
+L2 error:
+[0.0032380622317285616]
