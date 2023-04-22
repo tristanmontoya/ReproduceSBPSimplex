@@ -2,6 +2,7 @@ module TensorSimplexTests
 
     using OrdinaryDiffEq
     using LinearAlgebra
+    using LinearMaps: UniformScalingMap
     using TimerOutputs
     using LaTeXStrings
     using UnPack
@@ -11,7 +12,7 @@ module TensorSimplexTests
     using CLOUD
 
     export run_driver
-
-    export AdvectionDriver
+    export AdvectionDriver, AdvectionPRefinementDriver
     include("advection_refinement.jl")
+    include("advection_p_refinement.jl")
 end

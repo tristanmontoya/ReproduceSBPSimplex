@@ -6,8 +6,8 @@ struct AdvectionDriver{d}
     scheme::AbstractApproximationType
     element_type::AbstractElemShape
     form::AbstractResidualForm
+    strategy::AbstractStrategy
     ode_algorithm::OrdinaryDiffEqAlgorithm
-    mass_solver::AbstractMassMatrixSolver
     path::String
     M0::Int
     λ::Float64
@@ -20,11 +20,12 @@ struct AdvectionDriver{d}
     overwrite::Bool
 end
 
-function AdvectionDriver(p; l=3, C_t=1.0, n_s=50,
-    element_type=Tri(), scheme="ModalMulti", form = "SplitConservationForm",
-    mapping_form="SkewSymmetricMapping", ode_algorithm="CarpenterKennedy2N54",
-    mass_solver="CholeskySolver", path="../results/", M0 = 2,
-    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 0.05,
+function AdvectionDriver(p; l=4, C_t=1.0e-4, n_s=50,
+    element_type=Tri(), scheme="ModalMulti",
+    mapping_form="SkewSymmetricMapping", 
+    strategy="ReferenceOperator",ode_algorithm="CarpenterKennedy2N54", 
+    path="../results/20230421/", M0 = 2,
+    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 0.075,
     n_grids = 6, load_from_file=true, overwrite=false)
 
     if Int(round(λ)) == 0 
@@ -41,23 +42,23 @@ function AdvectionDriver(p; l=3, C_t=1.0, n_s=50,
 
     element_type = eval(Symbol(element_type))()
     scheme = eval(Symbol(scheme))(p)
-    form = eval(Symbol(form))(mapping_form=eval(Symbol(mapping_form))(),
+    form = StandardForm(mapping_form=eval(Symbol(mapping_form))(),
         inviscid_numerical_flux=LaxFriedrichsNumericalFlux(λ))
     ode_algorithm = eval(Symbol(ode_algorithm))()
-    mass_solver = eval(Symbol(mass_solver))()
+    strategy = eval(Symbol(strategy))()
 
     if isnothing(a)
         a = Tuple(1.0 for m in 1:dim(element_type))
     end
 
     return AdvectionDriver(p,l,C_t,n_s,scheme,element_type,
-        form,ode_algorithm,mass_solver,path,M0,λ,L,
+        form,strategy,ode_algorithm,path,M0,λ,L,
         a, T, mesh_perturb, n_grids, load_from_file, overwrite)
 end
 
 function run_driver(driver::AdvectionDriver{d}) where {d}
 
-    @unpack p,l,C_t,n_s,scheme,element_type,form,ode_algorithm,mass_solver,path,M0,λ,L,a,T,mesh_perturb, n_grids, load_from_file, overwrite = driver
+    @unpack p,l,C_t,n_s,scheme,element_type,form,strategy,ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, n_grids, load_from_file, overwrite = driver
 
     if (!load_from_file || !isdir(path)) path = new_path(
         path,overwrite,overwrite) end
@@ -90,14 +91,15 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
         
         mesh = warp_mesh(original_mesh, reference_approximation, 
             ChanWarping(mesh_perturb,Tuple(L for m in 1:d)))
-        
+
         spatial_discretization = SpatialDiscretization(mesh, 
-            reference_approximation, project_jacobian=isa(mass_solver,
-            WeightAdjustedSolver))
+            reference_approximation, 
+            project_jacobian=!isa(reference_approximation.V,UniformScalingMap))
+
+        mass_solver = WeightAdjustedSolver(spatial_discretization)
 
         solver = Solver(conservation_law, spatial_discretization, 
-            form, PhysicalOperator(), BLASAlgorithm(),
-            mass_solver)
+            form, strategy, BLASAlgorithm(), mass_solver)
         
         results_path = string(path, "grid_", n, "/")
         if !isdir(results_path)
@@ -128,7 +130,12 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
         ode_problem = semidiscretize(solver, u0, (t0, T))
 
         h = L/M
-        dt = C_t*h/(trace_constant(reference_approximation)*norm(a))
+        dt = C_t*h/norm(a)
+
+        open(string(results_path,"screen.txt"), "a") do io
+            println(io, "Using ", ode_algorithm, " with  dt = ", dt)
+        end
+        
         reset_timer!()
         sol = solve(ode_problem, ode_algorithm, adaptive=false,
             dt=dt, save_everystep=false, callback=save_callback(
@@ -153,9 +160,7 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
 
         if n > 1
             refinement_results = analyze(RefinementAnalysis(initial_data, path,
-            "./", "advection test"), n, max_derivs=true,
-            use_weight_adjusted_mass_matrix=isa(mass_solver,
-                WeightAdjustedSolver))
+                "./", "advection test"), n, max_derivs=false)
             open(string(path,"screen.txt"), "a") do io
                 println(io, tabulate_analysis(refinement_results, e=1,
                     print_latex=false))
