@@ -18,14 +18,19 @@ struct AdvectionPRefinementDriver{d}
     mesh_perturb::Float64
     load_from_file::Bool
     overwrite::Bool
+    run::Bool
+    spectral_radius::Bool
+    r::Int
+    tol::Float64
 end
 
 function AdvectionPRefinementDriver(p_min, p_max; l=2, C_t=0.1, n_s=50,
-    element_type=Tri(), scheme="ModalMulti",
+    element_type="Tri", scheme="ModalMulti",
     mapping_form="SkewSymmetricMapping", 
     strategy="ReferenceOperator",ode_algorithm="CarpenterKennedy2N54", 
-    path="../results/20230421_p/", M0 = 2,
-    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 0.05,load_from_file=true, overwrite=false)
+    path="../results/20230423_p/", M0 = 2,
+    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 1.0/16.0,load_from_file=true, overwrite=false, run=true, spectral_radius=false,
+    r=10, tol=1.0e-12)
 
     if Int(round(λ)) == 0 
         path = string(path, scheme, "_", element_type, "_",
@@ -52,12 +57,13 @@ function AdvectionPRefinementDriver(p_min, p_max; l=2, C_t=0.1, n_s=50,
     return AdvectionPRefinementDriver(p_min, p_max,
         l,C_t,n_s,scheme,element_type,
         form,strategy,ode_algorithm,path,M0,λ,L,
-        a, T, mesh_perturb, load_from_file, overwrite)
+        a, T, mesh_perturb, load_from_file, overwrite, run,
+        spectral_radius, r, tol)
 end
 
 function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
-    @unpack p_min, p_max,l,C_t,n_s,scheme,element_type,form,strategy,ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, load_from_file, overwrite = driver
+    @unpack p_min, p_max,l,C_t,n_s,scheme,element_type,form,strategy,ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, load_from_file, overwrite, run, spectral_radius, r, tol = driver
 
     if (!load_from_file || !isdir(path)) path = new_path(
         path,overwrite,overwrite) end
@@ -112,48 +118,82 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             end
         end
 
-        time_steps = load_time_steps(results_path)
-        if !isempty(time_steps)
-            restart_step = last(time_steps)
-            u0, t0 = load_solution(results_path, restart_step)
-            open(string(results_path,"screen.txt"), "a") do io
-                println(io, "\nRestarting from time step ", restart_step,
-                     "  t = ", t0)
+        if run
+            time_steps = load_time_steps(results_path)
+            if !isempty(time_steps)
+                restart_step = last(time_steps)
+                u0, t0 = load_solution(results_path, restart_step)
+                open(string(results_path,"screen.txt"), "a") do io
+                    println(io, "\nRestarting from time step ", restart_step,
+                        "  t = ", t0)
+                end
+            else
+                restart_step = 0
+                u0, t0 = initialize(initial_data, conservation_law,
+                    spatial_discretization), 0.0
             end
-        else
-            restart_step = 0
-            u0, t0 = initialize(initial_data, conservation_law,
-                spatial_discretization), 0.0
-        end
-        ode_problem = semidiscretize(solver, u0, (t0, T))
+            ode_problem = semidiscretize(solver, u0, (t0, T))
 
-        h = L/M
-        dt = C_t*h/(norm(a)*p^2)
+            h = L/M
+            dt = C_t*h/(norm(a)*p^2)
 
-        open(string(results_path,"screen.txt"), "a") do io
-            println(io, "Using ", ode_algorithm, " with  dt = ", dt)
+            open(string(results_path,"screen.txt"), "a") do io
+                println(io, "Using ", ode_algorithm, " with  dt = ", dt)
+            end
+            
+            reset_timer!()
+            sol = solve(ode_problem, ode_algorithm, adaptive=false,
+                dt=dt, save_everystep=false, callback=save_callback(
+                    results_path, (t0,T), ceil(Int, T/(dt*n_s)), restart_step))
+
+            if sol.retcode != :Success 
+                open(string(results_path,"screen.txt"), "a") do io
+                    println(io, "Solver failed! Retcode: ", string(sol.retcode))
+                end
+                continue
+            end
+
+            error_analysis = ErrorAnalysis(results_path, conservation_law, 
+                spatial_discretization)
+            
+            error = analyze(error_analysis, 
+                last(sol.u), initial_data)
+
+            open(string(results_path,"screen.txt"), "a") do io
+                println(io, "Solver successfully finished!\n")
+                println(io, @capture_out print_timer(), "\n")
+                println(io,"L2 error:\n", error)
+            end
+            open(string(path,"screen.txt"), "a") do io
+                println(io, "p = ", p, " L2 error: ", error)
+            end
         end
+
+        if spectral_radius
+
+            if p == p_min
+                save_object(string(path, "poly_degrees.jld2"), Int64[])
+                save_object(string(path, "spectral_radii.jld2"), Float64[])
+            end
+
+            linear_analysis = LinearAnalysis(results_path,
+                conservation_law, spatial_discretization, 
+                LinearResidual(solver), r=r,
+                use_data=false, name=string("p", p))
         
-        reset_timer!()
-        sol = solve(ode_problem, ode_algorithm, adaptive=false,
-            dt=dt, save_everystep=false, callback=save_callback(
-                results_path, (t0,T), ceil(Int, T/(dt*n_s)), restart_step))
+            linear_results = analyze(linear_analysis)
+            specr =  maximum(abs.(linear_results.λ))
 
-        if sol.retcode != :Success 
-            open(string(results_path,"screen.txt"), "a") do io
-                println(io, "Solver failed! Retcode: ", string(sol.retcode))
+            open(string(path,"screen.txt"), "a") do io
+                println(io, "p = ", p, ", spectral radius = ",specr)
             end
-            continue
-        end
 
-        error_analysis = ErrorAnalysis(results_path, conservation_law, 
-            spatial_discretization)
-
-        open(string(results_path,"screen.txt"), "a") do io
-            println(io, "Solver successfully finished!\n")
-            println(io, @capture_out print_timer(), "\n")
-            println(io,"L2 error:\n", analyze(error_analysis, 
-                last(sol.u), initial_data))
+            poly_degrees=load_object(string(path, "poly_degrees.jld2"))
+            save_object(string(path, "poly_degrees.jld2"),
+                push!(poly_degrees, p))
+            spectral_radii=load_object(string(path, "spectral_radii.jld2"))
+            save_object(string(path, "spectral_radii.jld2"),
+                push!(spectral_radii, specr))
         end
     end
 end

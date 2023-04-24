@@ -1,5 +1,6 @@
 module TensorSimplexTests
 
+    using JLD2
     using OrdinaryDiffEq
     using LinearAlgebra
     using LinearMaps: UniformScalingMap
@@ -10,9 +11,10 @@ module TensorSimplexTests
     using Suppressor
     using Plots
     using CLOUD
-
+    
     export run_driver
-    export AdvectionDriver, AdvectionPRefinementDriver
+    export AdvectionDriver
     include("advection_refinement.jl")
+    export AdvectionPRefinementDriver
     include("advection_p_refinement.jl")
 end
