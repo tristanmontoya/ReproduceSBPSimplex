@@ -176,13 +176,10 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
                 save_object(string(path, "spectral_radii.jld2"), Float64[])
             end
 
-            linear_analysis = LinearAnalysis(results_path,
-                conservation_law, spatial_discretization, 
-                LinearResidual(solver), r=r,
-                use_data=false, name=string("p", p))
-        
-            linear_results = analyze(linear_analysis)
-            specr =  maximum(abs.(linear_results.λ))
+            solver_map = Matrix(LinearResidual(solver))
+
+            eig, _ =  powm(solver_map)
+            specr=abs(eig)
 
             open(string(path,"screen.txt"), "a") do io
                 println(io, "p = ", p, ", spectral radius = ",specr)

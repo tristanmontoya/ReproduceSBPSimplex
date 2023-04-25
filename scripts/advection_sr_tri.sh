@@ -1,21 +1,21 @@
 #!/bin/bash
 #SBATCH --nodes=8
 #SBATCH --cpus-per-task=40
-#SBATCH --time=6:00
-#SBATCH --job-name tri_sr
+#SBATCH --time=6:00:00
+#SBATCH --job-name sr_tri
 
 module load NiaEnv/2019b 
 cd /scratch/z/zingg/tmontoya/v2/TensorSimplexTests/scripts
 export OPENBLAS_NUM_THREADS=40
 
-timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no --tri_sr/sr_mmc.jl &
-timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no --tri_sr/sr_mmu.jl &
-timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no --tri_sr/sr_nmc.jl &
-timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no --tri_sr/sr_nmu.jl &
-timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no --tri_sr/sr_mtc.jl &
-timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no --tri_sr/sr_mtu.jl &
-timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no --tri_sr/sr_ntc.jl &
-timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no --tri_sr/sr_ntu.jl &
+timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no sr_tri/sr_mmc.jl &
+timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no sr_tri/sr_mmu.jl &
+timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no sr_tri/sr_nmc.jl &
+timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no sr_tri/sr_nmu.jl &
+timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no sr_tri/sr_mtc.jl &
+timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no sr_tri/sr_mtu.jl &
+timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no sr_tri/sr_ntc.jl &
+timeout 345m srun -N 1 -n 1 -c 40 julia --project=.. --threads 1 --check-bounds=no sr_tri/sr_ntu.jl &
 wait
 
 num=$NUM

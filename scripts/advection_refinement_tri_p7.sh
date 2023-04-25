@@ -8,7 +8,7 @@ module load NiaEnv/2019b
 cd /scratch/z/zingg/tmontoya/TensorSimplexTests/scripts
 export OPENBLAS_NUM_THREADS=1
 
-timeout 1410m srun -N 1 -n 1 -c 40 julia --project=.. --threads 40 --check-bounds=no --tri_multi/advtrimm7c.jl &
+timeout 1410m srun -N 1 -n 1 -c 40 julia --project=.. --threads 40 --check-bounds=no tri_multi/advtrimm7c.jl &
 timeout 1410m srun -N 1 -n 1 -c 40 julia --project=.. --threads 40 --check-bounds=no tri_multi/advtrimm7u.jl &
 timeout 1410m srun -N 1 -n 1 -c 40 julia --project=.. --threads 40 --check-bounds=no tri_multi/advtrinm7c.jl &
 timeout 1410m srun -N 1 -n 1 -c 40 julia --project=.. --threads 40 --check-bounds=no tri_multi/advtrinm7u.jl &

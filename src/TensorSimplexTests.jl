@@ -10,7 +10,9 @@ module TensorSimplexTests
     using Dates
     using Suppressor
     using Plots
+    using IterativeSolvers: powm
     using CLOUD
+
     
     export run_driver
     export AdvectionDriver
