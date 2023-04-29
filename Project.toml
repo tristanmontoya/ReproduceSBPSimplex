@@ -5,6 +5,7 @@ version = "0.1.0"
 
 [deps]
 ArgParse = "c7e460c6-2fb9-53a9-8c5b-16f535851c63"
+Arpack = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
 CLOUD = "fb992021-99c7-4c2d-a14b-5e48ac4045b2"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 GFlops = "2ea8233c-34d4-5acc-88b4-02f326385bcc"

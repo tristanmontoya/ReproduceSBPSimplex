@@ -28,7 +28,7 @@ function AdvectionPRefinementDriver(p_min, p_max; l=2, C_t=0.1, n_s=50,
     element_type="Tri", scheme="ModalMulti",
     mapping_form="SkewSymmetricMapping", 
     strategy="ReferenceOperator",ode_algorithm="CarpenterKennedy2N54", 
-    path="../results/20230423_p/", M0 = 2,
+    path="../results/20230426_arpack/", M0 = 2,
     λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 1.0/16.0,load_from_file=true, overwrite=false, run=true, spectral_radius=false,
     r=10, tol=1.0e-12)
 
@@ -178,11 +178,15 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
             solver_map = Matrix(LinearResidual(solver))
 
-            eig, _ =  powm(solver_map)
-            specr=abs(eig)
+            (N_p, N_c, N_e) = get_dof(spatial_discretization, conservation_law)
+            rank = N_p*N_c*N_e - 2
+      
+            vals, V,nconv,niter,nmult,resid = eigs(solver_map, which=:LM, nev = rank)
+            specr=maximum(abs.(vals))
 
             open(string(path,"screen.txt"), "a") do io
                 println(io, "p = ", p, ", spectral radius = ",specr)
+                println(io, "nconv = ", nconv, " niter = ", niter)
             end
 
             poly_degrees=load_object(string(path, "poly_degrees.jld2"))

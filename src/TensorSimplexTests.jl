@@ -7,6 +7,7 @@ module TensorSimplexTests
     using TimerOutputs
     using LaTeXStrings
     using UnPack
+    using Arpack
     using Dates
     using Suppressor
     using Plots
