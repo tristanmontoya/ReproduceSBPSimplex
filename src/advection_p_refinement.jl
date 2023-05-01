@@ -29,8 +29,7 @@ function AdvectionPRefinementDriver(p_min, p_max; l=2, C_t=0.1, n_s=50,
     mapping_form="SkewSymmetricMapping", 
     strategy="ReferenceOperator",ode_algorithm="CarpenterKennedy2N54", 
     path="../results/20230426_arpack/", M0 = 2,
-    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 1.0/16.0,load_from_file=true, overwrite=false, run=true, spectral_radius=false,
-    r=10, tol=1.0e-12)
+    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 1.0/16.0,load_from_file=true, overwrite=false, run=true, spectral_radius=false, r=10, tol=1.0e-12)
 
     if Int(round(λ)) == 0 
         path = string(path, scheme, "_", element_type, "_",
@@ -84,6 +83,14 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
     conservation_law = LinearAdvectionEquation(a)
 
     for p in p_start:p_max
+        
+        if p == p_min
+            save_object(string(path, "poly_degrees.jld2"), Int64[])
+        end
+
+        poly_degrees=load_object(string(path, "poly_degrees.jld2"))
+        save_object(string(path, "poly_degrees.jld2"),
+            push!(poly_degrees, p))
 
         M = M0
 
@@ -104,7 +111,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
         solver = Solver(conservation_law, spatial_discretization, 
             form, strategy, BLASAlgorithm(), mass_solver)
-        
+
         results_path = string(path, "p", p, "/")
         if !isdir(results_path)
             save_project(conservation_law,
@@ -167,12 +174,19 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             open(string(path,"screen.txt"), "a") do io
                 println(io, "p = ", p, " L2 error: ", error)
             end
+
+            if p == p_min
+                save_object(string(path, "errors.jld2"), Float64[])
+            end
+
+            errors=load_object(string(path, "errors.jld2"))
+            save_object(string(path, "errors.jld2"),
+                push!(errors, error))
         end
 
         if spectral_radius
 
             if p == p_min
-                save_object(string(path, "poly_degrees.jld2"), Int64[])
                 save_object(string(path, "spectral_radii.jld2"), Float64[])
             end
 
@@ -181,17 +195,14 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             (N_p, N_c, N_e) = get_dof(spatial_discretization, conservation_law)
             rank = N_p*N_c*N_e - 2
       
-            vals, V,nconv,niter,nmult,resid = eigs(solver_map, which=:LM, nev = rank)
-            specr=maximum(abs.(vals))
+            F = eigen(solver_map)
+            specr=maximum(abs.(F.values))
 
             open(string(path,"screen.txt"), "a") do io
                 println(io, "p = ", p, ", spectral radius = ",specr)
                 println(io, "nconv = ", nconv, " niter = ", niter)
             end
 
-            poly_degrees=load_object(string(path, "poly_degrees.jld2"))
-            save_object(string(path, "poly_degrees.jld2"),
-                push!(poly_degrees, p))
             spectral_radii=load_object(string(path, "spectral_radii.jld2"))
             save_object(string(path, "spectral_radii.jld2"),
                 push!(spectral_radii, specr))
