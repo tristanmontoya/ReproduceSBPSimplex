@@ -119,7 +119,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
     for p in p_start:p_max
         
-        if p == p_min
+        if !isfile(string(path, "poly_degrees.jld2"))
             save_object(string(path, "poly_degrees.jld2"), Int64[])
         end
 
@@ -211,7 +211,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
                 println(io, "p = ", p, " L2 error: ", error)
             end
 
-            if p == p_min
+            if !isfile(string(path, "errors.jld2"))
                 save_object(string(path, "errors.jld2"), Float64[])
             end
 
@@ -222,7 +222,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
         if spectral_radius
 
-            if p == p_min
+            if !isfile(string(path, "spectral_radii.jld2"))
                 save_object(string(path, "spectral_radii.jld2"), Float64[])
                 save_object(string(path, "max_real.jld2"), Float64[])
                 save_object(string(path, "max_abs_real.jld2"), Float64[])
@@ -257,7 +257,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
         end
 
         if flops
-            if p == p_min 
+            if !isfile(string(path, "flops.jld2"))
                 save_object(string(path, "flops.jld2"), Float64[])
             end
 
