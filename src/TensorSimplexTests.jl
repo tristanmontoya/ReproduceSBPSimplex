@@ -4,6 +4,7 @@ module TensorSimplexTests
     using OrdinaryDiffEq
     using LinearAlgebra
     using LinearMaps: UniformScalingMap
+    using GFlops
     using TimerOutputs
     using LaTeXStrings
     using UnPack
