@@ -29,7 +29,8 @@ end
 function rhs_flops(reference_approximation::ReferenceApproximation{d};
     L::Float64=1.0, M::Int=1, mesh_perturb=1.0/16.0,
     strategy::AbstractStrategy=ReferenceOperator(),
-    operator_algorithm::AbstractOperatorAlgorithm=DefaultOperatorAlgorithm()) where {d}
+    operator_algorithm::AbstractOperatorAlgorithm=DefaultOperatorAlgorithm(),
+    tol::Float64=1.0e-12) where {d}
 
     conservation_law = LinearAdvectionEquation(Tuple(1.0 for m in 1:d))
 
@@ -48,7 +49,7 @@ function rhs_flops(reference_approximation::ReferenceApproximation{d};
 
     solver = Solver(conservation_law, spatial_discretization, 
         form, strategy, operator_algorithm, 
-        WeightAdjustedSolver(spatial_discretization,operator_algorithm=operator_algorithm))
+        WeightAdjustedSolver(spatial_discretization,operator_algorithm=operator_algorithm, tol=tol))
 
     u = rand(solver.N_p,solver.N_c,solver.N_e)
     dudt = similar(u)
@@ -143,7 +144,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             project_jacobian=!isa(reference_approximation.V,UniformScalingMap))
 
         mass_solver = WeightAdjustedSolver(spatial_discretization, 
-            operator_algorithm=BLASAlgorithm())
+            operator_algorithm=BLASAlgorithm(), tol=tol)
 
         solver = Solver(conservation_law, spatial_discretization, 
             form, strategy, BLASAlgorithm(), mass_solver)
@@ -262,7 +263,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             end
 
             count = rhs_flops(reference_approximation, strategy=strategy,
-                operator_algorithm=operator_algorithm)
+                operator_algorithm=operator_algorithm, tol=tol)
             total = 2*count.muladd64 + count.add64 + count.mul64
             flop_count_array =load_object(string(path, "flops.jld2"))
             save_object(string(path, "flops.jld2"),
