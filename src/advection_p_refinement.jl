@@ -143,7 +143,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             project_jacobian=!isa(reference_approximation.V,UniformScalingMap))
 
         mass_solver = WeightAdjustedSolver(spatial_discretization, 
-            operator_algorithm=operator_algorithm)
+            operator_algorithm=BLASAlgorithm())
 
         solver = Solver(conservation_law, spatial_discretization, 
             form, strategy, BLASAlgorithm(), mass_solver)

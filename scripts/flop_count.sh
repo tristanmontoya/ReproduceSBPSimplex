@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=40
-#SBATCH --time=24:00:00
+#SBATCH --time=12:00:00
 #SBATCH --job-name flop_count
 
 module load NiaEnv/2019b 
 cd /scratch/z/zingg/tmontoya/TensorSimplexTests/scripts
 export OPENBLAS_NUM_THREADS=1
 
-timeout 1430m julia --project=.. --threads 8 --check-bounds=no flops_tri.sh &
-timeout 1430m julia --project=.. --threads 8 --check-bounds=no flops_tet.sh &
+timeout 710m julia --project=.. --threads 8 --check-bounds=no flops_tri.sh &
+timeout 710m julia --project=.. --threads 8 --check-bounds=no flops_tet.sh &
 wait
 
 num=$NUM
