@@ -233,10 +233,21 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
             solver_map = Matrix(LinearResidual(solver))
 
+            open(string(results_path,"screen.txt"), "a") do io
+                println(io, "starting eigenvalue solve")
+            end
+
             F = eigen(solver_map)
             specr=maximum(abs.(F.values))
             max_real = maximum(real.(F.values))
             max_abs_real = maximum(abs.(real.(F.values)))
+
+            open(string(results_path,"screen.txt"), "a") do io
+                println(io, "eigenvalue solve complete!")
+                println(io, "spectral radius = ",specr,
+                    ", max real = ", max_real, 
+                    ", max abs real = ", max_abs_real)
+            end
 
             save_object(string(results_path, "spectrum.jld2"), F.values)
 

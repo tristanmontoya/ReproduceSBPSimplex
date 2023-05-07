@@ -8,8 +8,8 @@ module load NiaEnv/2019b
 cd /scratch/z/zingg/tmontoya/TensorSimplexTests/scripts
 export OPENBLAS_NUM_THREADS=1
 
-timeout 710m julia --project=.. --threads 8 --check-bounds=no flops_tri.jl &
-timeout 710m julia --project=.. --threads 8 --check-bounds=no flops_tet.jl &
+#timeout 1430m julia --project=.. --threads 8 --check-bounds=no flops_tri.jl &
+timeout 1430m julia --project=.. --threads 4 --check-bounds=no flops_tet_new.jl &
 wait
 
 num=$NUM
