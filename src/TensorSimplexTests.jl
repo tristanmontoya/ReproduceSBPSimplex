@@ -9,6 +9,7 @@ module TensorSimplexTests
     using LaTeXStrings
     using UnPack
     using Arpack
+    using KrylovKit: eigsolve
     using Dates
     using Suppressor
     using Plots

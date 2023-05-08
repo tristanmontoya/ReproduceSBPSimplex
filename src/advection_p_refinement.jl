@@ -21,6 +21,7 @@ struct AdvectionPRefinementDriver{d}
     overwrite::Bool
     run::Bool
     spectral_radius::Bool
+    eigensolver::String
     flops::Bool
     r::Int
     tol::Float64
@@ -65,7 +66,9 @@ function AdvectionPRefinementDriver(p_min, p_max; l=2, C_t=0.1, n_s=50,
     operator_algorithm="DefaultOperatorAlgorithm",
     ode_algorithm="CarpenterKennedy2N54", 
     path="../results/20230501_flops/", M0 = 2,
-    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 1.0/16.0,load_from_file=true, overwrite=false, run=true, spectral_radius=false, flops=false, r=10, tol=1.0e-12)
+    λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 1.0/16.0,load_from_file=true, overwrite=false, run=true, spectral_radius=false, 
+    eigensolver="KrylovKit",
+    flops=false, r=2, tol=1.0e-2)
 
     if Int(round(λ)) == 0 
         path = string(path, scheme, "_", element_type, "_",
@@ -94,12 +97,12 @@ function AdvectionPRefinementDriver(p_min, p_max; l=2, C_t=0.1, n_s=50,
         l,C_t,n_s,scheme,element_type,
         form,strategy, operator_algorithm, ode_algorithm,path,M0,λ,L,
         a, T, mesh_perturb, load_from_file, overwrite, run,
-        spectral_radius, flops, r, tol)
+        spectral_radius, eigensolver, flops, r, tol)
 end
 
 function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
-    @unpack p_min, p_max,l,C_t,n_s,scheme,element_type,form,strategy, operator_algorithm, ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, load_from_file, overwrite, run, spectral_radius, flops, r, tol = driver
+    @unpack p_min, p_max,l,C_t,n_s,scheme,element_type,form,strategy, operator_algorithm, ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, load_from_file, overwrite, run, spectral_radius, eigensolver, flops, r, tol = driver
 
     if (!load_from_file || !isdir(path)) path = new_path(
         path,overwrite,overwrite) end
@@ -145,8 +148,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             project_jacobian=!isa(reference_approximation.V,UniformScalingMap))
 
         mass_solver = WeightAdjustedSolver(spatial_discretization, 
-            operator_algorithm=BLASAlgorithm(), tol=tol,
-            assume_orthonormal=true)
+            operator_algorithm=BLASAlgorithm(), assume_orthonormal=true)
 
         solver = Solver(conservation_law, spatial_discretization, 
             form, strategy, BLASAlgorithm(), mass_solver)
@@ -231,43 +233,73 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
                 save_object(string(path, "max_abs_real.jld2"), Float64[])
             end
 
-            solver_map = Matrix(LinearResidual(solver))
+            if eigensolver == "ArPack"
 
-            open(string(results_path,"screen.txt"), "a") do io
-                println(io, "starting eigenvalue solve")
-            end
+                open(string(results_path,"screen.txt"), "a") do io
+                    println(io, "starting arpack eigenvalue solve")
+                end
 
-            F = eigen(solver_map)
-            specr=maximum(abs.(F.values))
-            max_real = maximum(real.(F.values))
-            max_abs_real = maximum(abs.(real.(F.values)))
+                eigenvalues, _ = eigs(LinearResidual(solver), 
+                    nev=r, which=:LM, maxiter=1000)
+                specr=maximum(abs.(eigenvalues))
 
-            open(string(results_path,"screen.txt"), "a") do io
-                println(io, "eigenvalue solve complete!")
-                println(io, "spectral radius = ",specr,
-                    ", max real = ", max_real, 
-                    ", max abs real = ", max_abs_real)
-            end
+                open(string(path,"screen.txt"), "a") do io
+                    println(io, "p = ", p, ", spectral radius = ",specr)
+                end
 
-            save_object(string(results_path, "spectrum.jld2"), F.values)
+            elseif eigensolver == "KrylovKit"
 
-            open(string(path,"screen.txt"), "a") do io
-                println(io, "p = ", p, ", spectral radius = ",specr,
-                    ", max real = ", max_real, 
-                    ", max abs real = ", max_abs_real)
+                open(string(results_path,"screen.txt"), "a") do io
+                    println(io, "starting krylovkit eigenvalue solve")
+                end
+
+                solver_map = LinearResidual(solver)
+                f(x) = solver_map*x
+                eigenvalues, _, info = eigsolve(f, size(solver_map,1), 1, :LM,
+                    tol=tol, verbosity=1, ishermitian=false,
+                     issymmetric=false)
+                specr=maximum(abs.(eigenvalues))
+
+                open(string(results_path,"screen.txt"), "a") do io
+                    println(io, "spectral radius = ", specr)
+                    println(io, @capture_out display(info))
+                end
+
+                open(string(path,"screen.txt"), "a") do io
+                    println(io, "p = ", p, ", spectral radius = ",specr)
+                end
+
+            else
+                solver_map = Matrix(LinearResidual(solver))
+
+                open(string(results_path,"screen.txt"), "a") do io
+                    println(io, "starting direct eigenvalue solve")
+                end
+                F = eigen(solver_map)
+                specr=maximum(abs.(F.values))
+                max_real = maximum(real.(F.values))
+                max_abs_real = maximum(abs.(real.(F.values)))
+
+                save_object(string(results_path, "spectrum.jld2"), F.values)
+
+                open(string(path,"screen.txt"), "a") do io
+                    println(io, "p = ", p, ", spectral radius = ",specr,
+                        ", max real = ", max_real, 
+                        ", max abs real = ", max_abs_real)
+                end
+            
+                max_real_array=load_object(string(path, "max_real.jld2"))
+                save_object(string(path, "max_real.jld2"),
+                    push!(max_real_array, max_real))
+
+                max_abs_real_array=load_object(string(path, "max_abs_real.jld2"))
+                save_object(string(path, "max_abs_real.jld2"),
+                    push!(max_abs_real_array, max_abs_real))
             end
 
             spectral_radii=load_object(string(path, "spectral_radii.jld2"))
             save_object(string(path, "spectral_radii.jld2"),
                 push!(spectral_radii, specr))
-            
-            max_real_array=load_object(string(path, "max_real.jld2"))
-            save_object(string(path, "max_real.jld2"),
-                push!(max_real_array, max_real))
-
-            max_abs_real_array=load_object(string(path, "max_abs_real.jld2"))
-                save_object(string(path, "max_abs_real.jld2"),
-                    push!(max_abs_real_array, max_abs_real))
         end
 
         if flops
