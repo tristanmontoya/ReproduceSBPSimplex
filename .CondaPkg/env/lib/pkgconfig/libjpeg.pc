@@ -1,0 +1,10 @@
+prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
+exec_prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
+libdir=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib
+includedir=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include
+
+Name: libjpeg
+Description: A SIMD-accelerated JPEG codec that provides the libjpeg API
+Version: 2.1.5.1
+Libs: -L${libdir} -ljpeg
+Cflags: -I${includedir}
