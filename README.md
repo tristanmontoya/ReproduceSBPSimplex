@@ -1,1 +1,1 @@
-# TensorSimplexTests
+# Efficient Tensor-Product Spectral-Element Operators with the Summation-by-Parts Property on Curved Triangles and Tetrahedra
