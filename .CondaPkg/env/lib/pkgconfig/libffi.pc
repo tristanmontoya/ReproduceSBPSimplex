@@ -1,8 +1,8 @@
-prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
+prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 toolexeclibdir=${libdir}
-includedir=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include
+includedir=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include
 
 Name: libffi
 Description: Library supporting Foreign Function Interfaces

@@ -5,10 +5,10 @@
 # You can do whatever you want with this file.
 #
 
-prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
-exec_prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
-libdir=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib
-includedir=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include
+prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env
+exec_prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env
+libdir=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib
+includedir=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include
 
 Name: liblzma
 Description: General purpose data compression library

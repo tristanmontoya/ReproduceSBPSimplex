@@ -1,4 +1,4 @@
-prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
+prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 

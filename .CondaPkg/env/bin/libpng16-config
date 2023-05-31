@@ -12,7 +12,7 @@
 # Modeled after libxml-config.
 
 version="1.6.39"
-prefix="/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env"
+prefix="/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env"
 exec_prefix="${prefix}"
 libdir="${exec_prefix}/lib"
 includedir="${prefix}/include/libpng16"

@@ -35,17 +35,17 @@ if test $? -eq 0 ; then
   dynamic_libs=` --libs freetype2`
   static_libs=` --static --libs freetype2`
 else
-  prefix="/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env"
-  exec_prefix="/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env"
+  prefix="/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env"
+  exec_prefix="/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env"
 
-  includedir="/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include"
-  libdir="/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib"
+  includedir="/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include"
+  libdir="/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib"
 
   version=24.3.18
 
   cflags="-I${SYSROOT}$includedir/freetype2"
   dynamic_libs="-lfreetype"
-  static_libs="-lfreetype -lz -L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib -lpng16 -lz"
+  static_libs="-lfreetype -lz -L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib -lpng16 -lz"
   if test "${SYSROOT}$libdir" != "/usr/lib"   &&
      test "${SYSROOT}$libdir" != "/usr/lib64" ; then
     libs_L="-L${SYSROOT}$libdir"

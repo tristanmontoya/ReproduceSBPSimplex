@@ -1,4 +1,4 @@
-module TensorSimplexTests
+module ReproduceSBPSimplex
 
     using JLD2
     using OrdinaryDiffEq

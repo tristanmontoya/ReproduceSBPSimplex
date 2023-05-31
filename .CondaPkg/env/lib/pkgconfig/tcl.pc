@@ -1,8 +1,8 @@
 # tcl pkg-config source file
 
-prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
-exec_prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
-libdir=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib
+prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env
+exec_prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env
+libdir=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib
 includedir=${prefix}/include
 
 Name: Tool Command Language

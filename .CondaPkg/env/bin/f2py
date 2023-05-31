@@ -1,4 +1,4 @@
-#!/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/bin/python
+#!/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

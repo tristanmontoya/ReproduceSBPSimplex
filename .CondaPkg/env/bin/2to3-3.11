@@ -1,4 +1,4 @@
-#!/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/bin/python3.11
+#!/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/bin/python3.11
 import sys
 from lib2to3.main import main
 

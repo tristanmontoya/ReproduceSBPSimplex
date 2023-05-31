@@ -12,22 +12,22 @@ build_time_vars = {'ABIFLAGS': '',
  'BASECFLAGS': '',
  'BASECPPFLAGS': '-IObjects -IInclude -IPython',
  'BASEMODLIBS': '',
- 'BINDIR': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/bin',
- 'BINLIBDEST': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11',
+ 'BINDIR': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/bin',
+ 'BINLIBDEST': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11',
  'BLDLIBRARY': 'libpython3.11.a',
  'BLDSHARED': 'clang -bundle -undefined '
               'dynamic_lookup '
               ''
               ''
               ''
-              '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-              '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+              '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+              '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
               ''
               ''
               ''
               ''
-              '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-              '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib',
+              '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+              '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib',
  'BOOTSTRAP_HEADERS': '\\',
  'BUILDEXE': '.exe',
  'BUILDPYTHON': 'python.exe',
@@ -39,14 +39,14 @@ build_time_vars = {'ABIFLAGS': '',
            ''
            '-fPIC   -O2  '
            '-isystem '
-           '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+           '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
            ''
            ''
            '-arch arm64  '
            ''
            '-fPIC   -O2  '
            '-isystem '
-           '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+           '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
            ''
            ''
            '-arch arm64 ',
@@ -59,7 +59,7 @@ build_time_vars = {'ABIFLAGS': '',
                      ''
                      '-fPIC   '
                      '-O2  -isystem '
-                     '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                     '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                      ''
                      ''
                      '-arch arm64 ',
@@ -69,54 +69,54 @@ build_time_vars = {'ABIFLAGS': '',
  'CONFIGURE_CPPFLAGS': ''
                        ''
                        '-D_FORTIFY_SOURCE=2 -isystem '
-                       '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                       '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                        '-mmacosx-version-min=11.0 '
-                       '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+                       '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'CONFIGURE_LDFLAGS': ''
                       ''
                       ''
                       ''
-                      '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-                      '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib',
+                      '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+                      '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib',
  'CONFIGURE_LDFLAGS_NODIST': '-Wl,-export_dynamic -g',
  'CONFIGURE_LDFLAGS_NOLTO': '=thin',
  'CONFIG_ARGS': "'--with-build-python=/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/build-python-install/bin/python'"
-                "'--prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env'"
+                "'--prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env'"
                 "'--build=x86_64-apple-darwin13.4.0'"
                 "'--host=arm64-apple-darwin20.0.0''--enable-ipv6'"
                 "'--with-ensurepip=no'"
-                "'--with-tzpath=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/share/zoneinfo:/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/share/tzinfo'"
+                "'--with-tzpath=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/share/zoneinfo:/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/share/tzinfo'"
                 "'--with-computed-gotos''--with-system-ffi'"
                 "'--with-system-expat''--enable-loadable-sqlite-extensions'"
-                "'--with-tcltk-includes=-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include'"
-                "'--with-tcltk-libs=-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib "
+                "'--with-tcltk-includes=-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include'"
+                "'--with-tcltk-libs=-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib "
                 "-ltcl8.6 -ltk8.6''--with-platlibdir=lib''--with-lto'"
                 "'-oldincludedir=/Users/runner/miniforge3/conda-bld/python-split_1680770657698/_build_env/arm64-apple-darwin20.0.0/sysroot/usr/include'"
                 "'--disable-shared''build_alias=x86_64-apple-darwin13.4.0'"
                 "'host_alias=arm64-apple-darwin20.0.0'"
-                "'PKG_CONFIG_PATH=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/pkgconfig'"
+                "'PKG_CONFIG_PATH=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/pkgconfig'"
                 "'MACHDEP=darwin''CC=clang'"
                 "'CFLAGS="
                 ''
                 '-fPIC   -O2 '
                 '-isystem '
-                '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                 ''
                 ''
                 "-arch arm64 ''LDFLAGS="
                 ''
                 ''
                 ''
-                '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-                "-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib'"
+                '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+                "-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib'"
                 "'CPPFLAGS="
                 ''
                 '-D_FORTIFY_SOURCE=2 -isystem '
-                '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                 '-mmacosx-version-min=11.0 '
-                "-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include'",
- 'CONFINCLUDEDIR': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
- 'CONFINCLUDEPY': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include/python3.11',
+                "-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include'",
+ 'CONFINCLUDEDIR': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
+ 'CONFINCLUDEPY': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include/python3.11',
  'COREPYTHONPATH': '',
  'COVERAGE_INFO': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/build-static/coverage.info',
  'COVERAGE_LCOV_OPTIONS': '--rc lcov_branch_coverage=1',
@@ -129,15 +129,15 @@ build_time_vars = {'ABIFLAGS': '',
              ''
              ''
              '-D_FORTIFY_SOURCE=2 -isystem '
-             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
              '-mmacosx-version-min=11.0 '
-             '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+             '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
              ''
              ''
              '-D_FORTIFY_SOURCE=2 -isystem '
-             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
              '-mmacosx-version-min=11.0 '
-             '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+             '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'CXX': 'clang++',
  'DECIMAL_CFLAGS': '-I/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_decimal/libmpdec '
                    '-DUNIVERSAL=1',
@@ -146,13 +146,13 @@ build_time_vars = {'ABIFLAGS': '',
                     '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Programs/_freeze_module.py '
                     '\\',
  'DEEPFREEZE_OBJS': 'Python/deepfreeze/deepfreeze.o',
- 'DESTDIRS': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env '
-             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11 '
-             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11/lib-dynload',
- 'DESTLIB': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11',
+ 'DESTDIRS': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env '
+             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11 '
+             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11/lib-dynload',
+ 'DESTLIB': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11',
  'DESTPATH': '',
- 'DESTSHARED': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11/lib-dynload',
+ 'DESTSHARED': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11/lib-dynload',
  'DFLAGS': '',
  'DIRMODE': 755,
  'DIST': 'README.rst ChangeLog configure configure.ac acconfig.h pyconfig.h.in '
@@ -675,12 +675,12 @@ build_time_vars = {'ABIFLAGS': '',
  'HAVE__GETPTY': 0,
  'HOSTRUNNER': '',
  'HOST_GNU_TYPE': 'aarch64-apple-darwin20.0.0',
- 'INCLDIRSTOMAKE': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
-                   '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
-                   '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include/python3.11 '
-                   '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include/python3.11',
- 'INCLUDEDIR': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
- 'INCLUDEPY': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include/python3.11',
+ 'INCLDIRSTOMAKE': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
+                   '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
+                   '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include/python3.11 '
+                   '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include/python3.11',
+ 'INCLUDEDIR': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
+ 'INCLUDEPY': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include/python3.11',
  'INSTALL': '/usr/bin/install -c',
  'INSTALL_DATA': '/usr/bin/install -c -m 644',
  'INSTALL_PROGRAM': '/usr/bin/install -c',
@@ -694,13 +694,13 @@ build_time_vars = {'ABIFLAGS': '',
  'LDFLAGS': ''
             ''
             ''
-            '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-            '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+            '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+            '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
             ''
             ''
             ''
-            '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-            '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib',
+            '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+            '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib',
  'LDFLAGS_NODIST': '',
  'LDLIBRARY': 'libpython3.11.a',
  'LDLIBRARYDIR': '',
@@ -708,30 +708,30 @@ build_time_vars = {'ABIFLAGS': '',
              ''
              ''
              ''
-             '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-             '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+             '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+             '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
              ''
              ''
              ''
-             '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-             '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib',
+             '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+             '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib',
  'LDVERSION': '3.11',
  'LIBC': '',
- 'LIBDEST': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11',
- 'LIBDIR': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib',
+ 'LIBDEST': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11',
+ 'LIBDIR': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib',
  'LIBEXPAT_A': 'Modules/expat/libexpat.a',
  'LIBEXPAT_CFLAGS': '-DNDEBUG -fwrapv -O2 -Wall '
                     ''
                     '-fPIC   -O2 '
                     '-isystem '
-                    '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     ''
                     ''
                     '-arch arm64  '
                     ''
                     '-fPIC   -O2 '
                     '-isystem '
-                    '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     ''
                     ''
                     '-arch arm64   -std=c11 '
@@ -743,18 +743,18 @@ build_time_vars = {'ABIFLAGS': '',
                     ''
                     ''
                     '-D_FORTIFY_SOURCE=2 -isystem '
-                    '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     '-mmacosx-version-min=11.0 '
-                    '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     ''
                     ''
                     '-D_FORTIFY_SOURCE=2 -isystem '
-                    '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     '-mmacosx-version-min=11.0 '
-                    '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+                    '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'LIBEXPAT_HEADERS': '\\',
  'LIBEXPAT_OBJS': '\\',
- 'LIBFFI_INCLUDEDIR': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+ 'LIBFFI_INCLUDEDIR': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'LIBM': '',
  'LIBMPDEC_A': 'Modules/_decimal/libmpdec/libmpdec.a',
  'LIBMPDEC_CFLAGS': '-I/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_decimal/libmpdec '
@@ -762,14 +762,14 @@ build_time_vars = {'ABIFLAGS': '',
                     ''
                     '-fPIC   -O2 '
                     '-isystem '
-                    '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     ''
                     ''
                     '-arch arm64  '
                     ''
                     '-fPIC   -O2 '
                     '-isystem '
-                    '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     ''
                     ''
                     '-arch arm64   -std=c11 '
@@ -781,21 +781,21 @@ build_time_vars = {'ABIFLAGS': '',
                     ''
                     ''
                     '-D_FORTIFY_SOURCE=2 -isystem '
-                    '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     '-mmacosx-version-min=11.0 '
-                    '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     ''
                     ''
                     '-D_FORTIFY_SOURCE=2 -isystem '
-                    '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                    '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                     '-mmacosx-version-min=11.0 '
-                    '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+                    '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'LIBMPDEC_HEADERS': '\\',
  'LIBMPDEC_OBJS': '\\',
  'LIBOBJDIR': 'Python/',
  'LIBOBJS': '',
- 'LIBPC': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/pkgconfig',
- 'LIBPL': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11/config-3.11-darwin',
+ 'LIBPC': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/pkgconfig',
+ 'LIBPL': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11/config-3.11-darwin',
  'LIBPYTHON': '',
  'LIBRARY': 'libpython3.11.a',
  'LIBRARY_DEPS': 'libpython3.11.a',
@@ -817,13 +817,13 @@ build_time_vars = {'ABIFLAGS': '',
  'LOCALMODLIBS': '',
  'MACHDEP': 'darwin',
  'MACHDEP_OBJS': '',
- 'MACHDESTLIB': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11',
+ 'MACHDESTLIB': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11',
  'MACOSX_DEPLOYMENT_TARGET': '11.0',
  'MAINCC': 'clang',
  'MAJOR_IN_MKDEV': 0,
  'MAJOR_IN_SYSMACROS': 0,
  'MAKESETUP': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/makesetup',
- 'MANDIR': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/share/man',
+ 'MANDIR': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/share/man',
  'MKDIR_P': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/install-sh '
             '-c -d',
  'MODBUILT_NAMES': 'atexit  faulthandler  posix  _signal  _tracemalloc  '
@@ -851,8 +851,8 @@ build_time_vars = {'ABIFLAGS': '',
  'MODULE_AUDIOOP_LDFLAGS': '',
  'MODULE_AUDIOOP_STATE': 'yes',
  'MODULE_BINASCII_CFLAGS': '-DUSE_ZLIB_CRC32 '
-                           '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
- 'MODULE_BINASCII_LDFLAGS': '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+                           '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
+ 'MODULE_BINASCII_LDFLAGS': '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                             '-lz',
  'MODULE_BINASCII_STATE': 'yes',
  'MODULE_CMATH_DEPS': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_math.h',
@@ -893,8 +893,8 @@ build_time_vars = {'ABIFLAGS': '',
  'MODULE_XXLIMITED_35_STATE': 'yes',
  'MODULE_XXLIMITED_STATE': 'yes',
  'MODULE_XXSUBTYPE_LDFLAGS': '',
- 'MODULE_ZLIB_CFLAGS': '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
- 'MODULE_ZLIB_LDFLAGS': '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+ 'MODULE_ZLIB_CFLAGS': '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
+ 'MODULE_ZLIB_LDFLAGS': '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                         '-lz',
  'MODULE_ZLIB_STATE': 'yes',
  'MODULE__ABC_LDFLAGS': '',
@@ -951,9 +951,9 @@ build_time_vars = {'ABIFLAGS': '',
  'MODULE__ELEMENTTREE_STATE': 'yes',
  'MODULE__FUNCTOOLS_LDFLAGS': '',
  'MODULE__GDBM_STATE': 'missing',
- 'MODULE__HASHLIB_CFLAGS': '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+ 'MODULE__HASHLIB_CFLAGS': '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'MODULE__HASHLIB_DEPS': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/hashlib.h',
- 'MODULE__HASHLIB_LDFLAGS': '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib   '
+ 'MODULE__HASHLIB_LDFLAGS': '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib   '
                             '-lcrypto',
  'MODULE__HASHLIB_STATE': 'yes',
  'MODULE__HEAPQ_STATE': 'yes',
@@ -964,8 +964,8 @@ build_time_vars = {'ABIFLAGS': '',
  'MODULE__JSON_STATE': 'yes',
  'MODULE__LOCALE_LDFLAGS': '',
  'MODULE__LSPROF_STATE': 'yes',
- 'MODULE__LZMA_CFLAGS': '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
- 'MODULE__LZMA_LDFLAGS': '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+ 'MODULE__LZMA_CFLAGS': '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
+ 'MODULE__LZMA_LDFLAGS': '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                          '-llzma',
  'MODULE__LZMA_STATE': 'yes',
  'MODULE__MD5_DEPS': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/hashlib.h',
@@ -1001,7 +1001,7 @@ build_time_vars = {'ABIFLAGS': '',
                         '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/getaddrinfo.c '
                         '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/getnameinfo.c',
  'MODULE__SOCKET_STATE': 'yes',
- 'MODULE__SQLITE3_CFLAGS': '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+ 'MODULE__SQLITE3_CFLAGS': '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                            '-I/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_sqlite',
  'MODULE__SQLITE3_DEPS': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_sqlite/connection.h '
                          '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_sqlite/cursor.h '
@@ -1010,11 +1010,11 @@ build_time_vars = {'ABIFLAGS': '',
                          '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_sqlite/prepare_protocol.h '
                          '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_sqlite/row.h '
                          '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_sqlite/util.h',
- 'MODULE__SQLITE3_LDFLAGS': '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+ 'MODULE__SQLITE3_LDFLAGS': '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                             '-lsqlite3',
  'MODULE__SQLITE3_STATE': 'yes',
  'MODULE__SRE_LDFLAGS': '',
- 'MODULE__SSL_CFLAGS': '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+ 'MODULE__SSL_CFLAGS': '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'MODULE__SSL_DEPS': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_ssl.h '
                      '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_ssl/cert.c '
                      '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_ssl/debughelpers.c '
@@ -1023,7 +1023,7 @@ build_time_vars = {'ABIFLAGS': '',
                      '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_ssl_data_111.h '
                      '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/_ssl_data_300.h '
                      '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Modules/socketmodule.h',
- 'MODULE__SSL_LDFLAGS': '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib  '
+ 'MODULE__SSL_LDFLAGS': '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib  '
                         '-lssl -lcrypto',
  'MODULE__SSL_STATE': 'yes',
  'MODULE__STATISTICS_LDFLAGS': '',
@@ -1039,9 +1039,9 @@ build_time_vars = {'ABIFLAGS': '',
  'MODULE__TESTINTERNALCAPI_STATE': 'yes',
  'MODULE__TESTMULTIPHASE_STATE': 'yes',
  'MODULE__THREAD_LDFLAGS': '',
- 'MODULE__TKINTER_CFLAGS': '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+ 'MODULE__TKINTER_CFLAGS': '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                            '-Wno-strict-prototypes -DWITH_APPINIT=1',
- 'MODULE__TKINTER_LDFLAGS': '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+ 'MODULE__TKINTER_LDFLAGS': '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                             '-ltk8.6 -ltkstub8.6 -ltcl8.6 -ltclstub8.6',
  'MODULE__TKINTER_STATE': 'yes',
  'MODULE__TRACEMALLOC_LDFLAGS': '',
@@ -1058,8 +1058,8 @@ build_time_vars = {'ABIFLAGS': '',
  'MVWDELCH_IS_EXPRESSION': 1,
  'NO_AS_NEEDED': '-Wl,--no-as-needed',
  'OBJECT_OBJS': '\\',
- 'OPENSSL_INCLUDES': '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
- 'OPENSSL_LDFLAGS': '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib',
+ 'OPENSSL_INCLUDES': '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
+ 'OPENSSL_LDFLAGS': '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib',
  'OPENSSL_LIBS': '-lssl -lcrypto',
  'OPENSSL_RPATH': '',
  'OPT': '-DNDEBUG -fwrapv -O2 -Wall',
@@ -1108,14 +1108,14 @@ build_time_vars = {'ABIFLAGS': '',
                              ''
                              '-fPIC  '
                              '-O2  -isystem '
-                             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                              ''
                              ''
                              '-arch arm64  '
                              ''
                              '-fPIC  '
                              '-O2  -isystem '
-                             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                              ''
                              ''
                              '-arch arm64   -std=c11 '
@@ -1127,28 +1127,28 @@ build_time_vars = {'ABIFLAGS': '',
                              ''
                              ''
                              '-D_FORTIFY_SOURCE=2 -isystem '
-                             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                              '-mmacosx-version-min=11.0 '
-                             '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                             '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                              ''
                              ''
                              '-D_FORTIFY_SOURCE=2 -isystem '
-                             '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                             '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                              '-mmacosx-version-min=11.0 '
-                             '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                             '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                              '-DPy_BUILD_CORE_BUILTIN',
  'PY_CFLAGS': '-DNDEBUG -fwrapv -O2 -Wall '
               ''
               '-fPIC   -O2  '
               '-isystem '
-              '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+              '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
               ''
               ''
               '-arch arm64  '
               ''
               '-fPIC   -O2  '
               '-isystem '
-              '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+              '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
               ''
               ''
               '-arch arm64 ',
@@ -1160,14 +1160,14 @@ build_time_vars = {'ABIFLAGS': '',
                    ''
                    '-fPIC   -O2 '
                    '-isystem '
-                   '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                   '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                    ''
                    ''
                    '-arch arm64  '
                    ''
                    '-fPIC   -O2 '
                    '-isystem '
-                   '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                   '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                    ''
                    ''
                    '-arch arm64   -std=c11 '
@@ -1178,70 +1178,70 @@ build_time_vars = {'ABIFLAGS': '',
                    ''
                    ''
                    '-D_FORTIFY_SOURCE=2 -isystem '
-                   '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                   '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                    '-mmacosx-version-min=11.0 '
-                   '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                   '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                    ''
                    ''
                    '-D_FORTIFY_SOURCE=2 -isystem '
-                   '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                   '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                    '-mmacosx-version-min=11.0 '
-                   '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                   '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                    '-DPy_BUILD_CORE',
  'PY_CORE_LDFLAGS': ''
                     ''
                     ''
                     ''
-                    '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-                    '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+                    '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+                    '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                     ''
                     ''
                     ''
                     ''
-                    '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-                    '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+                    '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+                    '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                     '-Wl,-export_dynamic -g',
  'PY_CPPFLAGS': '-IObjects -IInclude -IPython -I. '
                 '-I/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Include '
                 ''
                 ''
                 '-D_FORTIFY_SOURCE=2 -isystem '
-                '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                 '-mmacosx-version-min=11.0 '
-                '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                 ''
                 ''
                 '-D_FORTIFY_SOURCE=2 -isystem '
-                '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                 '-mmacosx-version-min=11.0 '
-                '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+                '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'PY_ENABLE_SHARED': 0,
  'PY_FORMAT_SIZE_T': '"z"',
  'PY_LDFLAGS': ''
                ''
                ''
                ''
-               '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-               '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+               '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+               '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                ''
                ''
                ''
                ''
-               '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-               '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib',
+               '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+               '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib',
  'PY_LDFLAGS_NODIST': '-Wl,-export_dynamic -g',
  'PY_LDFLAGS_NOLTO': ''
                      ''
                      ''
                      ''
-                     '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-                     '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+                     '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+                     '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                      ''
                      ''
                      ''
                      ''
-                     '-Wl,-rpath,/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
-                     '-L/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib '
+                     '-Wl,-rpath,/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
+                     '-L/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib '
                      '=thin',
  'PY_SQLITE_ENABLE_LOAD_EXTENSION': 1,
  'PY_SQLITE_HAVE_SERIALIZE': 1,
@@ -1251,14 +1251,14 @@ build_time_vars = {'ABIFLAGS': '',
                         ''
                         '-fPIC   '
                         '-O2  -isystem '
-                        '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                        '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                         ''
                         ''
                         '-arch arm64  '
                         ''
                         '-fPIC   '
                         '-O2  -isystem '
-                        '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                        '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                         ''
                         ''
                         '-arch arm64   -std=c11 '
@@ -1270,15 +1270,15 @@ build_time_vars = {'ABIFLAGS': '',
                         ''
                         ''
                         '-D_FORTIFY_SOURCE=2 -isystem '
-                        '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                        '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                         '-mmacosx-version-min=11.0 '
-                        '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                        '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                         ''
                         ''
                         '-D_FORTIFY_SOURCE=2 -isystem '
-                        '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include '
+                        '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include '
                         '-mmacosx-version-min=11.0 '
-                        '-I/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/include',
+                        '-I/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/include',
  'PY_SUPPORT_TIER': 2,
  'Py_DEBUG': 0,
  'Py_ENABLE_SHARED': 0,
@@ -1290,7 +1290,7 @@ build_time_vars = {'ABIFLAGS': '',
  'RESSRCDIR': 'Mac/Resources/framework',
  'RETSIGTYPE': 'void',
  'RUNSHARED': '',
- 'SCRIPTDIR': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib',
+ 'SCRIPTDIR': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib',
  'SETPGRP_HAVE_ARG': 0,
  'SHELL': '/bin/sh',
  'SHLIBS': '-ldl  -framework CoreFoundation',
@@ -1356,15 +1356,15 @@ build_time_vars = {'ABIFLAGS': '',
  'TIMEMODULE_LIB': 0,
  'TIME_WITH_SYS_TIME': 1,
  'TM_IN_SYS_TIME': 0,
- 'TZPATH': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/share/zoneinfo:/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/share/tzinfo',
+ 'TZPATH': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/share/zoneinfo:/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/share/tzinfo',
  'UNICODE_DEPS': '\\',
  'UNIVERSALSDK': '',
  'UPDATE_FILE': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/Tools/scripts/update_file.py',
  'USE_COMPUTED_GOTOS': 1,
  'VERSION': '3.11',
  'VPATH': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work',
- 'WASM_ASSETS_DIR': './Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env',
- 'WASM_STDLIB': './Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/lib/python3.11/os.py',
+ 'WASM_ASSETS_DIR': './Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env',
+ 'WASM_STDLIB': './Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/lib/python3.11/os.py',
  'WHEEL_PKG_DIR': '',
  'WINDOW_HAS_FLAGS': 1,
  'WITH_DECIMAL_CONTEXTVAR': 1,
@@ -1381,7 +1381,7 @@ build_time_vars = {'ABIFLAGS': '',
  'XMLLIBSUBDIRS': 'xml xml/dom xml/etree xml/parsers xml/sax',
  'abs_builddir': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work/build-static',
  'abs_srcdir': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work',
- 'datarootdir': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/share',
- 'exec_prefix': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env',
- 'prefix': '/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env',
+ 'datarootdir': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/share',
+ 'exec_prefix': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env',
+ 'prefix': '/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env',
  'srcdir': '/Users/runner/miniforge3/conda-bld/python-split_1680770657698/work'}

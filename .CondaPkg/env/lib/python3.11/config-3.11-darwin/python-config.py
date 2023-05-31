@@ -1,4 +1,4 @@
-#!/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env/bin/python3.11
+#!/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env/bin/python3.11
 # -*- python -*-
 
 # Keep this script in sync with python-config.sh.in

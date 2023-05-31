@@ -1,5 +1,5 @@
-prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
-exec_prefix=/Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env
+prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env
+exec_prefix=/Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env
 libdir=${prefix}/lib
 includedir=${prefix}/include
 

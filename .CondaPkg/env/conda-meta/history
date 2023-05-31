@@ -1,5 +1,5 @@
 ==> 2023-05-11 13:02:22 <==
-# cmd: /Users/tristanmontoya/.julia/artifacts/7cfea9db5b54ceb7d9109c8728914c9459303a75/bin/micromamba -r /Users/tristanmontoya/.julia/scratchspaces/0b3b1443-0f03-428d-bdfb-f27f9c1191ea/root create -y -p /Users/tristanmontoya/Research/TensorSimplexTests/.CondaPkg/env --override-channels --no-channel-priority matplotlib[version='>=1'] python[version='>=3.7,<4',channel='conda-forge',build='*cpython*'] -c conda-forge
+# cmd: /Users/tristanmontoya/.julia/artifacts/7cfea9db5b54ceb7d9109c8728914c9459303a75/bin/micromamba -r /Users/tristanmontoya/.julia/scratchspaces/0b3b1443-0f03-428d-bdfb-f27f9c1191ea/root create -y -p /Users/tristanmontoya/Research/ReproduceSBPSimplex/.CondaPkg/env --override-channels --no-channel-priority matplotlib[version='>=1'] python[version='>=3.7,<4',channel='conda-forge',build='*cpython*'] -c conda-forge
 # conda version: 3.8.0
 +https://conda.anaconda.org/conda-forge/osx-arm64::libzlib-1.2.13-h03a7124_4
 +https://conda.anaconda.org/conda-forge/osx-arm64::xz-5.2.6-h57fd34a_0
