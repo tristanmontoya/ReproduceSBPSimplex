@@ -104,9 +104,12 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
     @unpack p_min, p_max,l,C_t,n_s,scheme,element_type,form,strategy, operator_algorithm, ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, load_from_file, overwrite, run, spectral_radius, eigensolver, flops, r, tol = driver
 
-    if (!load_from_file || !isdir(path)) path = new_path(
-        path,overwrite,overwrite) end
-    if !isdir(string(path, "/p", p_min, "/")) p_start = p_min else
+    if (!load_from_file || !isdir(path)) 
+        path = new_path(path,overwrite,overwrite) 
+    end
+    if !isdir(string(path, "/p", p_min, "/")) 
+        p_start = p_min 
+    else
         for i in p_min:p_max
             if !isdir(string(path, "p", i + 1, "/"))
                 p_start = i
@@ -221,8 +224,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             end
 
             errors=load_object(string(path, "errors.jld2"))
-            save_object(string(path, "errors.jld2"),
-                push!(errors, error[1]))
+            save_object(string(path, "errors.jld2"), push!(errors, error[1]))
         end
 
         if spectral_radius

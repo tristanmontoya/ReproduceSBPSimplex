@@ -24,7 +24,7 @@ function AdvectionDriver(p; l=4, C_t=1.0e-4, n_s=50,
     element_type=Tri(), scheme="ModalMulti",
     mapping_form="SkewSymmetricMapping", 
     strategy="ReferenceOperator",ode_algorithm="CarpenterKennedy2N54", 
-    path="../results/20230421/", M0 = 2,
+    path="./results/h_refinement/", M0 = 2,
     λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 0.075,
     n_grids = 6, load_from_file=true, overwrite=false)
 
@@ -60,9 +60,12 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
 
     @unpack p,l,C_t,n_s,scheme,element_type,form,strategy,ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, n_grids, load_from_file, overwrite = driver
 
-    if (!load_from_file || !isdir(path)) path = new_path(
-        path,overwrite,overwrite) end
-    if !isdir(string(path, "grid_1/")) n_start = 1 else
+    if (!load_from_file || !isdir(path)) 
+        path = new_path(path,overwrite,overwrite) 
+    end
+    if !isdir(string(path, "grid_1/")) 
+        n_start = 1 
+    else
         for i in 1:n_grids
             if !isdir(string(path, "grid_", i + 1, "/"))
                 n_start = i
@@ -90,7 +93,7 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
             Tuple((0.0,L) for m in 1:d), Tuple(M for m in 1:d))
         
         mesh = warp_mesh(original_mesh, reference_approximation, 
-            ChanWarping(mesh_perturb,Tuple(L for m in 1:d)))
+            ChanWarping(mesh_perturb, Tuple(L for m in 1:d)))
 
         spatial_discretization = SpatialDiscretization(mesh, 
             reference_approximation, 
@@ -151,13 +154,20 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
 
         error_analysis = ErrorAnalysis(results_path, conservation_law, 
             spatial_discretization)
+        error = analyze(error_analysis, last(sol.u), initial_data)
 
         open(string(results_path,"screen.txt"), "a") do io
             println(io, "Solver successfully finished!\n")
             println(io, @capture_out print_timer(), "\n")
-            println(io,"L2 error:\n", analyze(error_analysis, 
-                last(sol.u), initial_data))
+            println(io,"L2 error:\n", error)
         end
+
+        if !isfile(string(path, "errors.jld2"))
+            save_object(string(path, "errors.jld2"), Float64[])
+        end
+
+        errors=load_object(string(path, "errors.jld2"))
+        save_object(string(path, "errors.jld2"), push!(errors, error[1]))
 
         if n > 1
             refinement_results = analyze(RefinementAnalysis(initial_data, path,
