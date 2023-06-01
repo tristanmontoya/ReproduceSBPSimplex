@@ -3,6 +3,9 @@
 This repository contains the Julia code to reproduce the results in the following manuscript:
 
 T. Montoya and D. W. Zingg, "Efficient Tensor-Product Spectral-Element Operators with the Summation-by-Parts Property on Curved Triangles and Tetrahedra," Submitted to SIAM Journal on Scientific Computing, 2023.
+
+Please cite this manuscript if you use this repository or the underlying spectral-element framework [CLOUD.jl](https://github.com/tristanmontoya/CLOUD.jl) in your research. An arXiv link is to be provided soon.
+
 ## Abstract
 We present an extension of the summation-by-parts (SBP) framework to tensor-product spectral-element operators in collapsed coordinates. The proposed approach enables the construction of provably stable discretizations of arbitrary order which combine the geometric flexibility of unstructured triangular and tetrahedral meshes with the efficiency of sum-factorization algorithms. Specifically, a methodology is developed for constructing triangular and tetrahedral spectral-element operators of any order which possess the SBP property (i.e. satisfying a discrete analogue of integration by parts) as well as a tensor-product decomposition. Such operators are then employed within the context of discontinuous spectral-element methods based on nodal expansions collocated at the tensor-product quadrature nodes as well as modal expansions employing Proriol-Koornwinder-Dubiner polynomials, the latter approach resolving the time step limitation associated with the singularity of the collapsed coordinate transformation. Energy-stable formulations for curvilinear meshes are obtained using a skew-symmetric splitting of the metric terms, and a weight-adjusted approximation is used to efficiently invert the curvilinear modal mass matrix. The proposed schemes are compared to those using non-tensorial multidimensional SBP operators, and are found to offer comparable accuracy to such schemes in the context of smooth linear advection problems on curved meshes, but at a reduced computational cost for higher polynomial degrees.
 
@@ -10,8 +13,8 @@ We present an extension of the summation-by-parts (SBP) framework to tensor-prod
 First, make sure to [install Julia](https://julialang.org/downloads/) if you haven't already done so. The tests in this paper were run on v1.8.5, and we recommend using that version or a later one. After cloning the repository, run `julia --project=.` within the top-level directory and install the main [CLOUD.jl](https://github.com/tristanmontoya/CLOUD.jl) package:
 ```julia
 julia> import Pkg
-julia> Pkg.instantiate()
 julia> Pkg.add(url="https://github.com/tristanmontoya/CLOUD.jl.git")
+julia> Pkg.instantiate()
 ```
 
 ## Reproducibility instructions
@@ -23,6 +26,8 @@ Here, we describe how to generate the results using the provided scripts, and ho
 | Spectral radius  | 3  |  [scripts/sr_tri/](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/scripts/sr_tri/) <br /> [scripts/sr_tet/](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/scripts/sr_tet/) | [notebooks/spectral_radius_tri.ipynb](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/notebooks/spectral_radius_tri.ipynb) <br /> [notebooks/spectral_radius_tet.ipynb](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/notebooks/spectral_radius_tet.ipynb) | 
 | Accuracy  |  4 | [scripts/h_refine_tri/](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/scripts/h_refine_tri/) <br /> [scripts/p_refine_tri/](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/scripts/p_refine_tri/) <br /> [scripts/h_refine_tet/](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/scripts/h_refine_tet/) <br /> [scripts/p_refine_tet/](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/scripts/p_refine_tet/)  | [notebooks/convergence_plots_tri.ipynb](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/notebooks/convergence_plots_tri.ipynb) <br /> [notebooks/convergence_plots_tet.ipynb](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/notebooks/convergence_plots_tet.ipynb)   | 
 | Operation count| 5 | [scripts/flops_tri.jl](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/scripts/flops_tri.jl) <br /> [scripts/flops_tet.jl](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/scripts/flops_tet.jl)|[notebooks/flops_tri.ipynb](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/notebooks/flops_tri.ipynb) <br /> [notebooks/flops_tet.ipynb](https://github.com/tristanmontoya/ReproduceSBPSimplex/tree/main/notebooks/flops_tet.ipynb)|
+
+The data files directly used to generate the figures in the manuscript are provided in the `results` directory in HDF5-compatible [JLD2 format](https://github.com/JuliaIO/JLD2.jl), although the raw simulation datasets (which can be produced by running the above scripts) are not provided due to their size. Further inquiries regarding the code, results, and manuscript should be directed to [tristan.montoya@mail.utoronto.ca](mailto:tristan.montoya@mail.utoronto.ca).
 
 ## License
 
