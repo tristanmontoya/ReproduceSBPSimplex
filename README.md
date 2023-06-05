@@ -4,16 +4,16 @@ This repository contains the Julia code to reproduce the results in the followin
 
 T. Montoya and D. W. Zingg, "Efficient Tensor-Product Spectral-Element Operators with the Summation-by-Parts Property on Curved Triangles and Tetrahedra," Submitted to SIAM Journal on Scientific Computing, 2023.
 
-Please cite this manuscript if you use this repository or the underlying spectral-element framework [CLOUD.jl](https://github.com/tristanmontoya/CLOUD.jl) in your research. An arXiv link is to be provided soon.
+Please cite the above manuscript if you use this repository or the underlying spectral-element framework [StableSpectralElements.jl](https://github.com/tristanmontoya/StableSpectralElements.jl) (formerly known as CLOUD.jl) in your research. 
 
 ## Abstract
 We present an extension of the summation-by-parts (SBP) framework to tensor-product spectral-element operators in collapsed coordinates. The proposed approach enables the construction of provably stable discretizations of arbitrary order which combine the geometric flexibility of unstructured triangular and tetrahedral meshes with the efficiency of sum-factorization algorithms. Specifically, a methodology is developed for constructing triangular and tetrahedral spectral-element operators of any order which possess the SBP property (i.e. satisfying a discrete analogue of integration by parts) as well as a tensor-product decomposition. Such operators are then employed within the context of discontinuous spectral-element methods based on nodal expansions collocated at the tensor-product quadrature nodes as well as modal expansions employing Proriol-Koornwinder-Dubiner polynomials, the latter approach resolving the time step limitation associated with the singularity of the collapsed coordinate transformation. Energy-stable formulations for curvilinear meshes are obtained using a skew-symmetric splitting of the metric terms, and a weight-adjusted approximation is used to efficiently invert the curvilinear modal mass matrix. The proposed schemes are compared to those using non-tensorial multidimensional SBP operators, and are found to offer comparable accuracy to such schemes in the context of smooth linear advection problems on curved meshes, but at a reduced computational cost for higher polynomial degrees.
 
 ## Installation
-First, make sure to [install Julia](https://julialang.org/downloads/) if you haven't already done so. The tests in this paper were run on v1.8.5, and we recommend using that version or a later one. After cloning the repository, run `julia --project=.` within the top-level directory and install the main [CLOUD.jl](https://github.com/tristanmontoya/CLOUD.jl) package:
+First, make sure to [install Julia](https://julialang.org/downloads/) if you haven't already done so. The tests in this paper were run on v1.8.5, and we recommend using that version or a later one. After cloning the repository, run `julia --project=.` within the top-level directory and install the main [StableSpectralElements.jl](https://github.com/tristanmontoya/StableSpectralElements.jl) package:
 ```julia
 julia> import Pkg
-julia> Pkg.add(url="https://github.com/tristanmontoya/CLOUD.jl.git")
+julia> Pkg.add(url="https://github.com/tristanmontoya/StableSpectralElements.jl.git")
 julia> Pkg.instantiate()
 ```
 

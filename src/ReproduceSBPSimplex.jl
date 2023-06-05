@@ -14,7 +14,7 @@ module ReproduceSBPSimplex
     using Suppressor
     using Plots
     using IterativeSolvers: powm
-    using CLOUD
+    using StableSpectralElements
 
     
     export run_driver
