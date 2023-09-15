@@ -27,19 +27,23 @@ struct AdvectionPRefinementDriver{d}
     tol::Float64
 end
 
-function rhs_flops(reference_approximation::ReferenceApproximation{d};
+function rhs_flops(
+    reference_approximation::ReferenceApproximation{<:RefElemData{d}};
     L::Float64=1.0, M::Int=1, mesh_perturb=1.0/16.0,
     strategy::AbstractStrategy=ReferenceOperator(),
     operator_algorithm::AbstractOperatorAlgorithm=DefaultOperatorAlgorithm(),
     assume_orthonormal::Bool=true) where {d}
 
-    conservation_law = LinearAdvectionEquation(Tuple(1.0 for m in 1:d))
+    a = Tuple(1.0 for m in 1:d)
+
+    println("a = ", a)
+    conservation_law = LinearAdvectionEquation(a)
 
     original_mesh = uniform_periodic_mesh(reference_approximation, 
         Tuple((0.0,L) for m in 1:d), Tuple(M for m in 1:d))
         
     mesh = warp_mesh(original_mesh, reference_approximation, 
-        ChanWarping(mesh_perturb,Tuple(L for m in 1:d)))
+        ChanWarping(mesh_perturb, Tuple(L for m in 1:d)))
 
     form = StandardForm(mapping_form=SkewSymmetricMapping(), 
     inviscid_numerical_flux=LaxFriedrichsNumericalFlux(1.0))
@@ -48,14 +52,16 @@ function rhs_flops(reference_approximation::ReferenceApproximation{d};
         reference_approximation, project_jacobian=isa(reference_approximation,
         Union{ModalTensor,ModalMulti}))
 
-    solver = Solver(conservation_law, spatial_discretization, 
-        form, strategy, operator_algorithm, 
-        WeightAdjustedSolver(spatial_discretization,operator_algorithm=operator_algorithm,
-        assume_orthonormal=assume_orthonormal))
+    solver = Solver(conservation_law, spatial_discretization, form,
+        strategy, operator_algorithm, WeightAdjustedSolver(
+        spatial_discretization, operator_algorithm,
+        assume_orthonormal=assume_orthonormal), Serial())
 
-    u = rand(solver.N_p,solver.N_c,solver.N_e)
+    (N_p, N_c, N_e) = size(solver)
+    u = rand(N_p, N_c, N_e)
     dudt = similar(u)
-    cnt = @count_ops rhs_benchmark!(dudt, u, solver, 0.0)
+    cnt = @count_ops StableSpectralElements.Analysis.rhs_benchmark!(
+        dudt, u, solver, 0.0)
     return cnt
 end
 
@@ -104,12 +110,9 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
 
     @unpack p_min, p_max,l,C_t,n_s,scheme,element_type,form,strategy, operator_algorithm, ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, load_from_file, overwrite, run, spectral_radius, eigensolver, flops, r, tol = driver
 
-    if (!load_from_file || !isdir(path)) 
-        path = new_path(path,overwrite,overwrite) 
-    end
-    if !isdir(string(path, "/p", p_min, "/")) 
-        p_start = p_min 
-    else
+    if (!load_from_file || !isdir(path)) path = new_path(
+        path,overwrite,overwrite) end
+    if !isdir(string(path, "/p", p_min, "/")) p_start = p_min else
         for i in p_min:p_max
             if !isdir(string(path, "p", i + 1, "/"))
                 p_start = i
@@ -150,11 +153,9 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             reference_approximation, 
             project_jacobian=!isa(reference_approximation.V,UniformScalingMap))
 
-        mass_solver = WeightAdjustedSolver(spatial_discretization, 
-            operator_algorithm=BLASAlgorithm(), assume_orthonormal=true)
-
-        solver = Solver(conservation_law, spatial_discretization, 
-            form, strategy, BLASAlgorithm(), mass_solver)
+        solver = Solver(conservation_law,spatial_discretization, form,
+            strategy, operator_algorithm, default_mass_matrix_solver(
+            spatial_discretization, operator_algorithm), Serial())
 
         results_path = string(path, "p", p, "/")
         if !isdir(results_path)
@@ -180,10 +181,10 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
                 end
             else
                 restart_step = 0
-                u0, t0 = initialize(initial_data, conservation_law,
-                    spatial_discretization), 0.0
+                u0, t0 = initialize(initial_data, spatial_discretization), 0.0
             end
-            ode_problem = semidiscretize(solver, u0, (t0, T))
+            ode_problem = ODEProblem(semi_discrete_residual!, u0, (t0,T),
+                solver)
 
             h = L/M
             dt = C_t*h/(norm(a)*p^2)
@@ -207,8 +208,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             error_analysis = ErrorAnalysis(results_path, conservation_law, 
                 spatial_discretization)
             
-            error = analyze(error_analysis, 
-                last(sol.u), initial_data)
+            error = analyze(error_analysis, last(sol.u), initial_data)
 
             open(string(results_path,"screen.txt"), "a") do io
                 println(io, "Solver successfully finished!\n")
@@ -224,7 +224,8 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
             end
 
             errors=load_object(string(path, "errors.jld2"))
-            save_object(string(path, "errors.jld2"), push!(errors, error[1]))
+            save_object(string(path, "errors.jld2"),
+                push!(errors, error[1]))
         end
 
         if spectral_radius

@@ -24,7 +24,7 @@ function AdvectionDriver(p; l=4, C_t=1.0e-4, n_s=50,
     element_type=Tri(), scheme="ModalMulti",
     mapping_form="SkewSymmetricMapping", 
     strategy="ReferenceOperator",ode_algorithm="CarpenterKennedy2N54", 
-    path="./results/h_refinement/", M0 = 2,
+    path="../results/20230421/", M0 = 2,
     λ=1.0, L=1.0, a = nothing, T = 1.0, mesh_perturb = 0.075,
     n_grids = 6, load_from_file=true, overwrite=false)
 
@@ -60,12 +60,9 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
 
     @unpack p,l,C_t,n_s,scheme,element_type,form,strategy,ode_algorithm,path,M0,λ,L,a,T,mesh_perturb, n_grids, load_from_file, overwrite = driver
 
-    if (!load_from_file || !isdir(path)) 
-        path = new_path(path,overwrite,overwrite) 
-    end
-    if !isdir(string(path, "grid_1/")) 
-        n_start = 1 
-    else
+    if (!load_from_file || !isdir(path)) path = new_path(
+        path,overwrite,overwrite) end
+    if !isdir(string(path, "grid_1/")) n_start = 1 else
         for i in 1:n_grids
             if !isdir(string(path, "grid_", i + 1, "/"))
                 n_start = i
@@ -78,9 +75,10 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
     end
 
     initial_data = InitialDataSine(1.0,Tuple(2*π/L for m in 1:d))
-
     conservation_law = LinearAdvectionEquation(a)
     eoc = -1.0
+
+    alg = DefaultOperatorAlgorithm()
 
     for n in n_start:n_grids
 
@@ -93,17 +91,15 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
             Tuple((0.0,L) for m in 1:d), Tuple(M for m in 1:d))
         
         mesh = warp_mesh(original_mesh, reference_approximation, 
-            ChanWarping(mesh_perturb, Tuple(L for m in 1:d)))
+            ChanWarping(mesh_perturb,Tuple(L for m in 1:d)))
 
         spatial_discretization = SpatialDiscretization(mesh, 
             reference_approximation, 
             project_jacobian=!isa(reference_approximation.V,UniformScalingMap))
 
-        mass_solver = WeightAdjustedSolver(spatial_discretization,
-            operator_algorithm=BLASAlgorithm(), assume_orthonormal=true)
-
-        solver = Solver(conservation_law, spatial_discretization, 
-            form, strategy, BLASAlgorithm(), mass_solver)
+        solver = Solver(conservation_law,spatial_discretization, form,
+            strategy, alg, default_mass_matrix_solver(spatial_discretization,
+            alg), Threaded())
         
         results_path = string(path, "grid_", n, "/")
         if !isdir(results_path)
@@ -128,10 +124,9 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
             end
         else
             restart_step = 0
-            u0, t0 = initialize(initial_data, conservation_law,
-                spatial_discretization), 0.0
+            u0, t0 = initialize(initial_data, spatial_discretization), 0.0
         end
-        ode_problem = semidiscretize(solver, u0, (t0, T))
+        ode_problem = ODEProblem(semi_discrete_residual!, u0, (t0,T), solver)
 
         h = L/M
         dt = C_t*h/norm(a)
@@ -154,20 +149,13 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
 
         error_analysis = ErrorAnalysis(results_path, conservation_law, 
             spatial_discretization)
-        error = analyze(error_analysis, last(sol.u), initial_data)
 
         open(string(results_path,"screen.txt"), "a") do io
             println(io, "Solver successfully finished!\n")
             println(io, @capture_out print_timer(), "\n")
-            println(io,"L2 error:\n", error)
+            println(io,"L2 error:\n", analyze(error_analysis, 
+                last(sol.u), initial_data))
         end
-
-        if !isfile(string(path, "errors.jld2"))
-            save_object(string(path, "errors.jld2"), Float64[])
-        end
-
-        errors=load_object(string(path, "errors.jld2"))
-        save_object(string(path, "errors.jld2"), push!(errors, error[1]))
 
         if n > 1
             refinement_results = analyze(RefinementAnalysis(initial_data, path,
