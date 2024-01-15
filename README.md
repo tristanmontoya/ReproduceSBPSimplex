@@ -2,7 +2,7 @@
 
 This repository contains the Julia code to reproduce the results in the following manuscript:
 
-T. Montoya and D. W. Zingg, "Efficient Tensor-Product Spectral-Element Operators with the Summation-by-Parts Property on Curved Triangles and Tetrahedra," [arXiv:2306.05975](https://arxiv.org/abs/2306.05975), 2023.
+T. Montoya and D. W. Zingg, "Efficient Tensor-Product Spectral-Element Operators with the Summation-by-Parts Property on Curved Triangles and Tetrahedra," [arXiv:2306.05975](https://arxiv.org/abs/2306.05975), 2024.
 
 Please cite the above manuscript if you use this repository or the underlying spectral-element framework [StableSpectralElements.jl](https://github.com/tristanmontoya/StableSpectralElements.jl) in your research. 
 
