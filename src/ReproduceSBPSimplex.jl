@@ -4,7 +4,7 @@ module ReproduceSBPSimplex
     using OrdinaryDiffEq
     using LinearAlgebra
     using LinearMaps: UniformScalingMap
-    using GFlops
+    using CountFlops
     using TimerOutputs
     using LaTeXStrings
     using UnPack

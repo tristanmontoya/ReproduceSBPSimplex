@@ -36,7 +36,6 @@ function rhs_flops(
 
     a = Tuple(1.0 for m in 1:d)
 
-    println("a = ", a)
     conservation_law = LinearAdvectionEquation(a)
 
     original_mesh = uniform_periodic_mesh(reference_approximation, 

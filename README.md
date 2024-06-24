@@ -2,7 +2,7 @@
 
 This repository contains the Julia code to reproduce the results in the following manuscript:
 
-T. Montoya and D. W. Zingg, "Efficient Tensor-Product Spectral-Element Operators with the Summation-by-Parts Property on Curved Triangles and Tetrahedra," [arXiv:2306.05975](https://arxiv.org/abs/2306.05975), 2024.
+T. Montoya and D. W. Zingg, "Efficient Tensor-Product Spectral-Element Operators with the Summation-by-Parts Property on Curved Triangles and Tetrahedra," to appear in SIAM Journal on Scientific Computing, [arXiv:2306.05975](https://arxiv.org/abs/2306.05975), 2024.
 
 Please cite the above manuscript if you use this repository or the underlying spectral-element framework [StableSpectralElements.jl](https://github.com/tristanmontoya/StableSpectralElements.jl) in your research. 
 
@@ -10,7 +10,7 @@ Please cite the above manuscript if you use this repository or the underlying sp
 We present an extension of the summation-by-parts (SBP) framework to tensor-product spectral-element operators in collapsed coordinates. The proposed approach enables the construction of provably stable discretizations of arbitrary order which combine the geometric flexibility of unstructured triangular and tetrahedral meshes with the efficiency of sum-factorization algorithms. Specifically, a methodology is developed for constructing triangular and tetrahedral spectral-element operators of any order which possess the SBP property (i.e. satisfying a discrete analogue of integration by parts) as well as a tensor-product decomposition. Such operators are then employed within the context of discontinuous spectral-element methods based on nodal expansions collocated at the tensor-product quadrature nodes as well as modal expansions employing Proriol-Koornwinder-Dubiner polynomials, the latter approach resolving the time step limitation associated with the singularity of the collapsed coordinate transformation. Energy-stable formulations for curvilinear meshes are obtained using a skew-symmetric splitting of the metric terms, and a weight-adjusted approximation is used to efficiently invert the curvilinear modal mass matrix. The proposed schemes are compared to those using non-tensorial multidimensional SBP operators, and are found to offer comparable accuracy to such schemes in the context of smooth linear advection problems on curved meshes, but at a reduced computational cost for higher polynomial degrees.
 
 ## Installation
-First, make sure to [install Julia](https://julialang.org/downloads/) if you haven't already done so. The tests in this paper were run on v1.8.5, and we recommend using that version or a later one. Earlier versions may result in incorrect operation counts due to [this issue with diagonal matrix multiplication](https://github.com/JuliaLang/julia/pull/44651). Then, assuming that you are using Linux or macOS and have git installed, follow the steps below.
+First, make sure to [install the latest stable release of Julia](https://julialang.org/downloads/) if you haven't already done so. Then, assuming that you are using Linux or macOS and have git installed, follow the steps below.
 
 1. Clone this repository by entering the command `git clone https://github.com/tristanmontoya/ReproduceSBPSimplex.git` in the terminal.
 
