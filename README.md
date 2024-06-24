@@ -16,7 +16,7 @@ First, make sure to [install the latest stable release of Julia](https://juliala
 
 2. Within the top-level `ReproduceSBPSimplex` directory, use the command `julia --project=.` to open the Julia REPL and activate the project within the current directory.
 
-3. Install all dependencies by entering `using Pkg; Pkg.instantiate()` in the REPL. This will automatically set up the latest version of [StableSpectralElements.jl](https://github.com/tristanmontoya/StableSpectralElements.jl) for you to use within this project.
+3. Install all dependencies by entering `using Pkg; Pkg.instantiate()` in the REPL. This will automatically set up [StableSpectralElements.jl](https://github.com/tristanmontoya/StableSpectralElements.jl).
 
 ## Reproducibility instructions
 Here, we describe how to generate the results using the provided scripts, and how to produce the results in the manuscript using the provided Jupyter notebooks. Note that some of the tests run a lot faster with multithreading enabled (for example, add `--threads 8` to the `julia` command if you want to use eight threads). If using multiple Julia threads, it is [usually best to set the number of BLAS threads to 1](https://carstenbauer.github.io/ThreadPinning.jl/dev/explanations/blas/) (for example, using the `OPENBLAS_NUM_THREADS` environment variable). The table below lists the scripts containing the appropriate calls to the driver file for each numerical experiment, as well as the notebooks used to postprocess the simulation results in order to generate the figures. If a directory is listed in the scripts column, then all scripts in the directory should be run (in any order).

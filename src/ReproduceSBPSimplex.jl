@@ -12,7 +12,6 @@ module ReproduceSBPSimplex
     using KrylovKit: eigsolve
     using Dates
     using Suppressor
-    using Plots
     using IterativeSolvers: powm
     using StableSpectralElements
 
