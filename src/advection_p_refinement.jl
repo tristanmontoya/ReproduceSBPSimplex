@@ -1,15 +1,16 @@
-struct AdvectionPRefinementDriver{d}
+struct AdvectionPRefinementDriver{d, ElemShape, ResidualForm, 
+                                  Strategy, OperatorAlgorithm, ODEAlgorithm}
     p_min::Int
     p_max::Int
     l::Int
     C_t::Float64
     n_s::Int
     scheme::String
-    element_type::AbstractElemShape
-    form::AbstractResidualForm
-    strategy::AbstractStrategy
-    operator_algorithm::AbstractOperatorAlgorithm
-    ode_algorithm::OrdinaryDiffEqAlgorithm
+    element_type::ElemShape
+    form::ResidualForm
+    strategy::Strategy
+    operator_algorithm::OperatorAlgorithm
+    ode_algorithm::ODEAlgorithm
     path::String
     M0::Int
     λ::Float64

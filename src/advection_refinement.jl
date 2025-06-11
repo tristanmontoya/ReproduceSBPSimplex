@@ -1,13 +1,13 @@
-struct AdvectionDriver{d}
+struct AdvectionDriver{d, ApproxType, ElemShape, ResidualForm, Strategy, ODEAlgorithm}
     p::Int
     l::Int
     C_t::Float64
     n_s::Int
-    scheme::AbstractApproximationType
-    element_type::AbstractElemShape
-    form::AbstractResidualForm
-    strategy::AbstractStrategy
-    ode_algorithm::OrdinaryDiffEqAlgorithm
+    scheme::ApproxType
+    element_type::ElemShape
+    form::ResidualForm
+    strategy::Strategy
+    ode_algorithm::ODEAlgorithm
     path::String
     M0::Int
     λ::Float64
