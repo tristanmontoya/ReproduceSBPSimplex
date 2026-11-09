@@ -21,7 +21,7 @@ struct AdvectionDriver{d, ApproxType, ElemShape, ResidualForm, Strategy, ODEAlgo
 end
 
 function AdvectionDriver(p; l=4, C_t=1.0e-4, n_s=50,
-    element_type=Tri(), scheme="ModalMulti",
+    element_type="Tri", scheme="ModalMulti",
     mapping_form="SkewSymmetricMapping", 
     strategy="ReferenceOperator",ode_algorithm="CarpenterKennedy2N54", 
     path="../results/20230421/", M0 = 2,
@@ -140,7 +140,7 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
             dt=dt, save_everystep=false, callback=save_callback(
                 results_path, (t0,T), ceil(Int, T/(dt*n_s)), restart_step))
 
-        if sol.retcode != :Success 
+        if !successful_retcode(sol)
             open(string(results_path,"screen.txt"), "a") do io
                 println(io, "Solver failed! Retcode: ", string(sol.retcode))
             end
@@ -161,8 +161,11 @@ function run_driver(driver::AdvectionDriver{d}) where {d}
             refinement_results = analyze(RefinementAnalysis(initial_data, path,
                 "./", "advection test"), n, max_derivs=false)
             open(string(path,"screen.txt"), "a") do io
-                println(io, tabulate_analysis(refinement_results, e=1,
-                    print_latex=false))
+                println(io, "Elements, conservation metric, energy metric, L2 error, order:")
+                show(io, MIME"text/plain"(), hcat(refinement_results.dof[:,2],
+                    refinement_results.conservation[:,1], refinement_results.energy[:,1],
+                    refinement_results.error[:,1], refinement_results.eoc[:,1]))
+                println(io)
             end
             eoc = refinement_results.eoc[end,1]
         end

@@ -49,8 +49,9 @@ function rhs_flops(
     inviscid_numerical_flux=LaxFriedrichsNumericalFlux(1.0))
 
     spatial_discretization = SpatialDiscretization(mesh, 
-        reference_approximation, project_jacobian=isa(reference_approximation,
-        Union{ModalTensor,ModalMulti}))
+        reference_approximation,
+        project_jacobian=isa(reference_approximation.approx_type,
+            Union{ModalTensor,ModalMulti}))
 
     solver = Solver(conservation_law, spatial_discretization, form,
         strategy, operator_algorithm, WeightAdjustedSolver(
@@ -60,8 +61,14 @@ function rhs_flops(
     (N_p, N_c, N_e) = size(solver)
     u = rand(N_p, N_c, N_e)
     dudt = similar(u)
-    cnt = @count_ops StableSpectralElements.Analysis.rhs_benchmark!(
-        dudt, u, solver, 0.0)
+
+    # Initialize neighbouring facet states before counting one element
+    for k in 1:N_e
+        nodal_values!(u, solver, k)
+    end
+    cnt = RHSFlopCounter(0, 0, 0)
+    cnt(nodal_values!, u, solver, 1)
+    cnt(time_derivative!, dudt, solver, 1)
     return cnt
 end
 
@@ -198,7 +205,7 @@ function run_driver(driver::AdvectionPRefinementDriver{d}) where {d}
                 dt=dt, save_everystep=false, callback=save_callback(
                     results_path, (t0,T), ceil(Int, T/(dt*n_s)), restart_step))
 
-            if sol.retcode != :Success 
+            if !successful_retcode(sol)
                 open(string(results_path,"screen.txt"), "a") do io
                     println(io, "Solver failed! Retcode: ", string(sol.retcode))
                 end

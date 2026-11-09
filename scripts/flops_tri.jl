@@ -24,7 +24,7 @@ drivers = [AdvectionPRefinementDriver(2,16, element_type="Tri", scheme="NodalMul
         mapping_form="SkewSymmetricMapping", 
         strategy="PhysicalOperator",
         operator_algorithm="GenericMatrixAlgorithm",
-        path="./results/flops_reference/", M0=1, run=false, flops=true),
+        path="./results/flops_physical/", M0=1, run=false, flops=true),
     AdvectionPRefinementDriver(2,16, element_type="Tri", scheme="ModalMulti",
         mapping_form="SkewSymmetricMapping", 
         strategy="PhysicalOperator",

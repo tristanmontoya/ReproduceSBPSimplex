@@ -2,9 +2,10 @@ module ReproduceSBPSimplex
 
     using JLD2
     using OrdinaryDiffEq
+    using OrdinaryDiffEq.SciMLBase: successful_retcode
     using LinearAlgebra
     using LinearMaps: UniformScalingMap
-    using CountFlops
+    using CassetteOverlay: AbstractBindingOverlay
     using TimerOutputs
     using LaTeXStrings
     using UnPack
@@ -19,6 +20,7 @@ module ReproduceSBPSimplex
     export run_driver
     export AdvectionDriver
     include("advection_refinement.jl")
+    include("flop_counter.jl")
     export AdvectionPRefinementDriver
     include("advection_p_refinement.jl")
 end
